@@ -1,0 +1,815 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="robots" content="noindex,nofollow" />
+  <meta name="theme-color" content="#f7ede5" />
+  <title>Нейропедагог — материалы для учителя</title>
+
+  <!-- Можно заменить шрифты, если захочется другой характер -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --bg: #fbf7f2;
+      --paper: #fffdfa;
+      --peach-50: #fff4ec;
+      --peach-100: #f9e4d7;
+      --peach-200: #f3cfbd;
+      --peach-300: #e8ae91;
+      --peach-500: #c97858;
+      --terracotta: #a95f46;
+      --ink: #2d2521;
+      --muted: #746862;
+      --line: rgba(111, 76, 62, .16);
+      --shadow: 0 22px 60px rgba(83, 53, 43, .12);
+      --radius-xl: 32px;
+      --radius-lg: 24px;
+      --radius-md: 18px;
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      font-family: "Manrope", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      color: var(--ink);
+      background:
+        radial-gradient(circle at 7% 4%, rgba(244, 202, 180, .35), transparent 30%),
+        radial-gradient(circle at 93% 24%, rgba(245, 222, 206, .55), transparent 24%),
+        linear-gradient(180deg, #fffaf6 0%, var(--bg) 42%, #faf5ef 100%);
+      min-height: 100vh;
+    }
+
+    a { color: inherit; }
+    button, input { font: inherit; }
+
+    .site-shell { display: none; }
+    body.unlocked .site-shell { display: block; }
+
+    /* ---------- Вход по паролю ---------- */
+    .gate {
+      min-height: 100vh;
+      display: grid;
+      place-items: center;
+      padding: 24px;
+      position: relative;
+      overflow: hidden;
+      background:
+        radial-gradient(circle at 12% 18%, rgba(232, 174, 145, .42), transparent 28%),
+        radial-gradient(circle at 88% 8%, rgba(249, 228, 215, .85), transparent 30%),
+        linear-gradient(145deg, #fffaf6 0%, #f7e9df 48%, #fbf7f2 100%);
+    }
+
+    body.unlocked .gate { display: none; }
+
+    .gate::before,
+    .gate::after {
+      content: "";
+      position: absolute;
+      width: 420px;
+      height: 420px;
+      border-radius: 50%;
+      border: 1px solid rgba(169, 95, 70, .10);
+      pointer-events: none;
+    }
+    .gate::before { left: -180px; bottom: -170px; }
+    .gate::after { right: -150px; top: -160px; width: 360px; height: 360px; }
+
+    .gate-card {
+      width: min(520px, 100%);
+      padding: 54px 46px 42px;
+      border: 1px solid rgba(169, 95, 70, .14);
+      border-radius: 36px;
+      background: rgba(255, 253, 250, .88);
+      backdrop-filter: blur(14px);
+      box-shadow: 0 28px 90px rgba(85, 53, 40, .15);
+      text-align: center;
+      position: relative;
+      z-index: 1;
+    }
+
+    .monogram {
+      width: 66px;
+      height: 66px;
+      display: grid;
+      place-items: center;
+      margin: 0 auto 22px;
+      border-radius: 50%;
+      border: 1px solid rgba(169, 95, 70, .25);
+      background: linear-gradient(145deg, #fff8f2, #f5dccd);
+      color: var(--terracotta);
+      font-family: "Cormorant Garamond", serif;
+      font-size: 32px;
+      font-weight: 700;
+      letter-spacing: .03em;
+    }
+
+    .eyebrow {
+      margin: 0 0 10px;
+      text-transform: uppercase;
+      letter-spacing: .22em;
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--terracotta);
+    }
+
+    .gate h1,
+    .hero h1,
+    .section-title h2 {
+      font-family: "Cormorant Garamond", Georgia, serif;
+      font-weight: 600;
+      letter-spacing: -.03em;
+    }
+
+    .gate h1 {
+      font-size: clamp(42px, 7vw, 64px);
+      line-height: .95;
+      margin: 0 0 16px;
+    }
+
+    .gate p.sub {
+      margin: 0 auto 30px;
+      max-width: 390px;
+      line-height: 1.7;
+      color: var(--muted);
+    }
+
+    .password-row {
+      display: flex;
+      gap: 10px;
+      align-items: stretch;
+    }
+
+    .password-wrap { flex: 1; position: relative; }
+    .password-wrap input {
+      width: 100%;
+      height: 54px;
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      padding: 0 48px 0 17px;
+      background: #fff;
+      color: var(--ink);
+      outline: none;
+      transition: .2s ease;
+    }
+    .password-wrap input:focus {
+      border-color: rgba(169, 95, 70, .5);
+      box-shadow: 0 0 0 4px rgba(201, 120, 88, .08);
+    }
+    .toggle-pass {
+      position: absolute;
+      top: 50%; right: 12px;
+      transform: translateY(-50%);
+      border: 0;
+      background: transparent;
+      color: var(--muted);
+      cursor: pointer;
+      padding: 7px;
+      border-radius: 10px;
+    }
+    .gate-submit {
+      border: 0;
+      border-radius: 16px;
+      padding: 0 21px;
+      background: linear-gradient(135deg, var(--terracotta), #c98262);
+      color: white;
+      font-weight: 700;
+      cursor: pointer;
+      box-shadow: 0 10px 24px rgba(169, 95, 70, .22);
+      transition: transform .2s ease, box-shadow .2s ease;
+    }
+    .gate-submit:hover { transform: translateY(-1px); box-shadow: 0 14px 30px rgba(169, 95, 70, .28); }
+    .gate-error { min-height: 23px; margin: 12px 0 0; color: #a54747; font-size: 13px; }
+    .gate-note { margin-top: 22px; color: #9a8c84; font-size: 12px; }
+
+    /* ---------- Основной сайт ---------- */
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: 20;
+      backdrop-filter: blur(16px);
+      background: rgba(251, 247, 242, .82);
+      border-bottom: 1px solid rgba(111, 76, 62, .10);
+    }
+    .topbar-inner {
+      width: min(1180px, calc(100% - 36px));
+      margin: auto;
+      min-height: 72px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 22px;
+    }
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      text-decoration: none;
+    }
+    .brand-mark {
+      width: 38px;
+      height: 38px;
+      border-radius: 50%;
+      display: grid;
+      place-items: center;
+      background: var(--peach-100);
+      color: var(--terracotta);
+      font-family: "Cormorant Garamond", serif;
+      font-weight: 700;
+      font-size: 20px;
+    }
+    .brand strong { font-size: 14px; letter-spacing: .09em; text-transform: uppercase; }
+    .nav { display: flex; align-items: center; gap: 24px; }
+    .nav a {
+      text-decoration: none;
+      font-size: 13px;
+      color: var(--muted);
+      transition: color .2s ease;
+    }
+    .nav a:hover { color: var(--terracotta); }
+    .logout {
+      border: 1px solid var(--line);
+      background: rgba(255,255,255,.65);
+      color: var(--muted);
+      border-radius: 999px;
+      padding: 9px 13px;
+      cursor: pointer;
+      font-size: 12px;
+    }
+
+    .container { width: min(1180px, calc(100% - 36px)); margin: auto; }
+
+    .hero {
+      padding: 88px 0 62px;
+      position: relative;
+    }
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1.2fr .8fr;
+      gap: 56px;
+      align-items: end;
+    }
+    .hero h1 {
+      font-size: clamp(54px, 8vw, 104px);
+      line-height: .88;
+      margin: 4px 0 28px;
+      max-width: 900px;
+    }
+    .hero h1 em { color: var(--terracotta); font-style: normal; }
+    .hero-copy {
+      max-width: 700px;
+      font-size: 18px;
+      line-height: 1.75;
+      color: var(--muted);
+    }
+    .hero-aside {
+      border-left: 1px solid var(--line);
+      padding-left: 28px;
+      margin-bottom: 10px;
+    }
+    .hero-aside p {
+      margin: 0 0 22px;
+      font-family: "Cormorant Garamond", serif;
+      font-size: 27px;
+      line-height: 1.25;
+    }
+    .chips { display: flex; flex-wrap: wrap; gap: 8px; }
+    .chip {
+      padding: 8px 12px;
+      border-radius: 999px;
+      border: 1px solid var(--line);
+      background: rgba(255,255,255,.55);
+      color: var(--muted);
+      font-size: 12px;
+    }
+
+    section { padding: 58px 0; }
+    .section-title {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      align-items: end;
+      gap: 18px;
+      margin-bottom: 28px;
+    }
+    .section-title h2 { font-size: clamp(42px, 5.4vw, 72px); line-height: .95; margin: 0; }
+    .section-title p { margin: 0 0 6px; max-width: 430px; color: var(--muted); line-height: 1.6; }
+
+    .video-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 22px; }
+    .video-card {
+      overflow: hidden;
+      border: 1px solid var(--line);
+      border-radius: var(--radius-xl);
+      background: rgba(255, 253, 250, .86);
+      box-shadow: var(--shadow);
+    }
+    .video-frame {
+      aspect-ratio: 16 / 9;
+      background: linear-gradient(145deg, #ead0c0, #f8ede5);
+      border-bottom: 1px solid var(--line);
+    }
+    .video-frame video { width: 100%; height: 100%; display: block; object-fit: cover; background: #261f1b; }
+    .video-body { padding: 28px 30px 30px; }
+    .step-line { display: flex; justify-content: space-between; gap: 18px; color: var(--terracotta); font-size: 12px; text-transform: uppercase; letter-spacing: .13em; font-weight: 700; }
+    .video-body h3 {
+      margin: 15px 0 10px;
+      font-family: "Cormorant Garamond", serif;
+      font-size: 37px;
+      line-height: 1.05;
+    }
+    .video-body p { color: var(--muted); line-height: 1.65; margin: 0; }
+
+    .editorial-card {
+      display: grid;
+      grid-template-columns: .8fr 1.2fr;
+      overflow: hidden;
+      border-radius: var(--radius-xl);
+      border: 1px solid var(--line);
+      background: var(--paper);
+      box-shadow: var(--shadow);
+    }
+    .editorial-intro {
+      min-height: 360px;
+      padding: 44px;
+      background:
+        radial-gradient(circle at 22% 18%, rgba(255,255,255,.78), transparent 24%),
+        linear-gradient(145deg, #f1d4c5, #f9ebe2);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+    .big-number {
+      font-family: "Cormorant Garamond", serif;
+      font-size: 110px;
+      line-height: .7;
+      color: rgba(169, 95, 70, .55);
+    }
+    .editorial-intro h3 {
+      font-family: "Cormorant Garamond", serif;
+      font-size: 44px;
+      margin: 0;
+      line-height: 1;
+    }
+    .editorial-content { padding: 40px; }
+    .editorial-content > p { margin-top: 0; color: var(--muted); line-height: 1.7; }
+
+    .prompt-box {
+      position: relative;
+      border: 1px solid var(--line);
+      border-radius: 20px;
+      background: #fff;
+      padding: 24px 24px 22px;
+    }
+    .prompt-box pre {
+      margin: 0;
+      white-space: pre-wrap;
+      font: 500 13px/1.75 "Manrope", sans-serif;
+      color: #413833;
+    }
+    .copy-btn {
+      margin-top: 16px;
+      border: 0;
+      border-radius: 12px;
+      background: var(--ink);
+      color: #fff;
+      padding: 10px 14px;
+      cursor: pointer;
+      font-size: 12px;
+      font-weight: 700;
+    }
+    .copy-btn.copied { background: var(--terracotta); }
+
+    .works { display: grid; gap: 24px; }
+    .work-card {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      min-height: 430px;
+      overflow: hidden;
+      border-radius: var(--radius-xl);
+      border: 1px solid var(--line);
+      background: rgba(255,253,250,.9);
+      box-shadow: var(--shadow);
+    }
+    .work-visual {
+      background: linear-gradient(145deg, #f6e0d4, #fff8f2);
+      position: relative;
+      min-height: 360px;
+      overflow: hidden;
+    }
+    .work-visual img { width: 100%; height: 100%; object-fit: cover; display: block; }
+    .work-placeholder {
+      position: absolute;
+      inset: 0;
+      display: grid;
+      place-items: center;
+      padding: 32px;
+      text-align: center;
+      color: var(--terracotta);
+    }
+    .work-placeholder span {
+      display: inline-block;
+      border: 1px dashed rgba(169, 95, 70, .35);
+      border-radius: 18px;
+      padding: 26px;
+      background: rgba(255,255,255,.45);
+    }
+    .work-content { padding: 38px; }
+    .work-content h3 {
+      margin: 8px 0 10px;
+      font-family: "Cormorant Garamond", serif;
+      font-size: 39px;
+      line-height: 1;
+    }
+    .work-content > p { color: var(--muted); line-height: 1.65; }
+
+    .closing {
+      margin: 46px 0 72px;
+      padding: 48px;
+      border-radius: var(--radius-xl);
+      background: #2d2521;
+      color: #fff8f2;
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 24px;
+      align-items: center;
+    }
+    .closing h3 { margin: 0; font-family: "Cormorant Garamond", serif; font-size: 42px; line-height: 1; }
+    .closing p { margin: 10px 0 0; color: rgba(255,255,255,.66); }
+    .closing-tag { border: 1px solid rgba(255,255,255,.22); border-radius: 999px; padding: 10px 14px; font-size: 12px; }
+
+    footer {
+      padding: 0 0 34px;
+      text-align: center;
+      color: #95877f;
+      font-size: 12px;
+    }
+
+    @media (max-width: 900px) {
+      .nav a { display: none; }
+      .hero-grid, .video-grid, .editorial-card, .work-card, .closing { grid-template-columns: 1fr; }
+      .hero-aside { border-left: 0; border-top: 1px solid var(--line); padding: 24px 0 0; }
+      .section-title { grid-template-columns: 1fr; }
+      .section-title p { max-width: 650px; }
+      .editorial-intro { min-height: 280px; }
+    }
+
+    @media (max-width: 560px) {
+      .gate-card { padding: 42px 24px 32px; border-radius: 28px; }
+      .password-row { flex-direction: column; }
+      .gate-submit { height: 50px; }
+      .hero { padding-top: 58px; }
+      .video-body, .editorial-content, .work-content, .closing { padding: 26px; }
+      .editorial-intro { padding: 30px; }
+      .hero-copy { font-size: 16px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ================================================
+       ЭКРАН ВХОДА
+       Пароль сейчас: «нейропедагог».
+       В коде хранится только SHA-256 хеш пароля.
+       ВАЖНО: это защита интерфейса, а не полноценный серверный paywall.
+       ================================================ -->
+  <section class="gate" id="gate">
+    <div class="gate-card">
+      <div class="monogram">Н</div>
+      <p class="eyebrow">Закрытые материалы</p>
+      <h1>Добро пожаловать</h1>
+      <p class="sub">Введите пароль, который вы получили после оплаты. После входа откроются видеоуроки, промпты и примеры материалов.</p>
+
+      <form id="loginForm" autocomplete="off">
+        <div class="password-row">
+          <div class="password-wrap">
+            <input id="passwordInput" type="password" placeholder="Пароль" aria-label="Пароль" required />
+            <button class="toggle-pass" type="button" id="togglePassword" aria-label="Показать пароль">◉</button>
+          </div>
+          <button class="gate-submit" type="submit">Войти</button>
+        </div>
+        <p class="gate-error" id="gateError" role="alert"></p>
+      </form>
+
+      <div class="gate-note">Доступ к авторским материалам • только для участников обучения</div>
+    </div>
+  </section>
+
+  <!-- ================================================
+       ОСНОВНОЙ САЙТ
+       ================================================ -->
+  <div class="site-shell" id="siteShell">
+    <header class="topbar">
+      <div class="topbar-inner">
+        <a href="#top" class="brand">
+          <span class="brand-mark">Н</span>
+          <strong>Нейропедагог</strong>
+        </a>
+        <nav class="nav" aria-label="Навигация">
+          <a href="#lessons">Видеоуроки</a>
+          <a href="#workbook">Рабочая тетрадь</a>
+          <a href="#portfolio">Примеры</a>
+          <button class="logout" id="logoutBtn" type="button">Выйти</button>
+        </nav>
+      </div>
+    </header>
+
+    <main id="top">
+      <section class="hero">
+        <div class="container hero-grid">
+          <div>
+            <p class="eyebrow">Практикум для преподавателей</p>
+            <h1>От идеи к <em>готовому продукту</em></h1>
+            <p class="hero-copy">Создаём цифровые материалы с нейросетями: интерактивный тренажёр, рабочую тетрадь, публикацию в интернете и собственную библиотеку готовых решений.</p>
+          </div>
+          <aside class="hero-aside">
+            <p>Не просто «что умеет ИИ», а полный путь — от запроса до ссылки, которую можно отправить ученику.</p>
+            <div class="chips">
+              <span class="chip">2 видеоурока</span>
+              <span class="chip">готовые промпты</span>
+              <span class="chip">примеры работ</span>
+            </div>
+          </aside>
+        </div>
+      </section>
+
+      <section id="lessons">
+        <div class="container">
+          <div class="section-title">
+            <div>
+              <p class="eyebrow">Модуль 01</p>
+              <h2>Два ключевых видеоурока</h2>
+            </div>
+            <p>В первом видео создаём интерактивный тренажёр, во втором — большую рабочую тетрадь.</p>
+          </div>
+
+          <div class="video-grid">
+            <article class="video-card">
+              <div class="video-frame">
+                <video controls preload="metadata" poster="">
+                  <source src="1.mp4" type="video/mp4" />
+                  Ваш браузер не поддерживает видео.
+                </video>
+              </div>
+              <div class="video-body">
+                <div class="step-line"><span>Видеоурок 01</span><span>Создание</span></div>
+                <h3>Создаём интерактивный тренажёр</h3>
+                <p>От идеи и структуры заданий — до готового HTML-кода с проверкой ответов, подсказками и аккуратным интерфейсом.</p>
+              </div>
+            </article>
+
+            <article class="video-card">
+              <div class="video-frame">
+                <video controls preload="metadata" poster="">
+                  <source src="2.mp4" type="video/mp4" />
+                  Ваш браузер не поддерживает видео.
+                </video>
+              </div>
+              <div class="video-body">
+                <div class="step-line"><span>Видеоурок 02</span><span>Создание</span></div>
+                <h3>Создаём рабочую тетрадь</h3>
+                <p>От структуры и методических требований — до большой рабочей тетради с теорией, разборами, тренажёром и ответами.</p>
+              </div>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section id="workbook">
+        <div class="container">
+          <div class="section-title">
+            <div>
+              <p class="eyebrow">Модуль 02</p>
+              <h2>Рабочая тетрадь</h2>
+            </div>
+            <p>От структуры темы до цельного материала: теория, разборы, тренажёр и ответы.</p>
+          </div>
+
+          <div class="editorial-card">
+            <div class="editorial-intro">
+              <div class="big-number">02</div>
+              <h3>Создаём большую рабочую тетрадь</h3>
+            </div>
+            <div class="editorial-content">
+              <p>Здесь можно оставить основной промпт, который участники копируют и адаптируют под свой предмет и тему.</p>
+              <div class="prompt-box">
+                <pre id="prompt-workbook">Я учитель [предмет]. Создай структуру большой рабочей тетради по теме «[тема]» для [класс] класса.
+
+Для каждого смыслового блока предусмотрите:
+— краткую теорию;
+— понятный алгоритм;
+— полностью разобранный пример;
+— типичные ошибки;
+— тренировочные задания от простого к сложному;
+— самостоятельные задания;
+— ответы и решения для учителя.
+
+Сначала покажи только структуру тетради. Не создавай весь материал, пока структура не будет утверждена.
+
+После утверждения структуры создавай материал по разделам. Перед финальной выдачей проверь задания, ответы и соответствие всем моим требованиям.</pre>
+                <button class="copy-btn" data-copy="prompt-workbook" type="button">Скопировать промпт</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="netlify">
+        <div class="container">
+          <div class="section-title">
+            <div>
+              <p class="eyebrow">Отдельный шаг</p>
+              <h2>Публикуем тренажёр на Netlify</h2>
+            </div>
+            <p>После видео 1 готовый HTML-файл можно быстро превратить в ссылку для учеников или коллег.</p>
+          </div>
+
+          <div class="editorial-card">
+            <div class="editorial-intro">
+              <div class="big-number">03</div>
+              <h3>Из файла — в готовую ссылку</h3>
+            </div>
+            <div class="editorial-content">
+              <p><strong>Шаг 1.</strong> Сохраните код тренажёра как <code>index.html</code>.</p>
+              <p><strong>Шаг 2.</strong> Откройте Netlify Drop.</p>
+              <p><strong>Шаг 3.</strong> Перетащите файл <code>index.html</code> или папку проекта в окно загрузки.</p>
+              <p><strong>Шаг 4.</strong> Дождитесь публикации и скопируйте готовую ссылку.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="portfolio">
+        <div class="container">
+          <div class="section-title">
+            <div>
+              <p class="eyebrow">Моя библиотека</p>
+              <h2>Примеры работ + промпты</h2>
+            </div>
+            <p>Позже просто загрузите изображения своих материалов с именами <strong>work-1.jpg</strong>, <strong>work-2.jpg</strong>, <strong>work-3.jpg</strong>.</p>
+          </div>
+
+          <div class="works">
+            <article class="work-card">
+              <div class="work-visual">
+                <img src="work-1.jpg" alt="Пример работы 1" onerror="this.style.display='none'">
+                <div class="work-placeholder"><span>Здесь будет<br><strong>пример вашей работы №1</strong><br><small>файл work-1.jpg</small></span></div>
+              </div>
+              <div class="work-content">
+                <p class="eyebrow">Пример 01</p>
+                <h3>Рабочий лист</h3>
+                <p>Разместите рядом тот самый промпт, по которому был создан этот материал.</p>
+                <div class="prompt-box">
+                  <pre id="prompt-1">Создай рабочий лист по теме «[тема]» для [класс] класса.
+
+Структура:
+1. Краткое правило.
+2. Один полностью разобранный пример.
+3. Три задания с опорой.
+4. Пять заданий для самостоятельной работы.
+5. Одно задание повышенного уровня.
+6. Ответы отдельно.
+
+Оставь достаточно места для решения и не перегружай страницу текстом.</pre>
+                  <button class="copy-btn" data-copy="prompt-1" type="button">Скопировать промпт</button>
+                </div>
+              </div>
+            </article>
+
+            <article class="work-card">
+              <div class="work-visual">
+                <img src="work-2.jpg" alt="Пример работы 2" onerror="this.style.display='none'">
+                <div class="work-placeholder"><span>Здесь будет<br><strong>пример вашей работы №2</strong><br><small>файл work-2.jpg</small></span></div>
+              </div>
+              <div class="work-content">
+                <p class="eyebrow">Пример 02</p>
+                <h3>Интерактивный тренажёр</h3>
+                <p>Карточка уже готова — останется заменить изображение и ваш финальный промпт.</p>
+                <div class="prompt-box">
+                  <pre id="prompt-2">Создай интерактивный тренажёр по теме «[тема]» в одном HTML-файле.
+
+Требования:
+— задания показываются по одному;
+— есть поле для ответа;
+— после ответа ученик получает обратную связь;
+— при ошибке сначала даётся подсказка, а не готовое решение;
+— ведётся счёт правильных ответов;
+— в конце отображается результат;
+— дизайн современный, спокойный и удобный на телефоне.
+
+Выдай полный готовый HTML-код, который можно сохранить как index.html и открыть в браузере.</pre>
+                  <button class="copy-btn" data-copy="prompt-2" type="button">Скопировать промпт</button>
+                </div>
+              </div>
+            </article>
+
+            <article class="work-card">
+              <div class="work-visual">
+                <img src="work-3.jpg" alt="Пример работы 3" onerror="this.style.display='none'">
+                <div class="work-placeholder"><span>Здесь будет<br><strong>пример вашей работы №3</strong><br><small>файл work-3.jpg</small></span></div>
+              </div>
+              <div class="work-content">
+                <p class="eyebrow">Пример 03</p>
+                <h3>Ваш следующий продукт</h3>
+                <p>Этот блок специально оставлен универсальным — сюда можно поставить тетрадь, презентацию, карточки или любой другой материал.</p>
+                <div class="prompt-box">
+                  <pre id="prompt-3">Вставьте сюда ваш авторский промпт.
+
+Совет: лучше хранить рядом с готовой работой именно финальную версию запроса — со всеми правками, требованиями к структуре, дизайну и проверке.</pre>
+                  <button class="copy-btn" data-copy="prompt-3" type="button">Скопировать промпт</button>
+                </div>
+              </div>
+            </article>
+          </div>
+
+          <div class="closing">
+            <div>
+              <h3>Сохраняйте не только результат, но и способ его создания.</h3>
+              <p>Так постепенно собирается собственная библиотека промптов и шаблонов.</p>
+            </div>
+            <div class="closing-tag">Нейропедагог</div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer>
+      Авторские учебные материалы • доступ для участников обучения
+    </footer>
+  </div>
+
+  <script>
+    // SHA-256 для пароля «нейропедагог»
+    const PASSWORD_HASH = "a69c348737543a940a07702f678eebc8710e0b2ccb2631c642abafe2afae9632";
+
+    const form = document.getElementById('loginForm');
+    const passwordInput = document.getElementById('passwordInput');
+    const gateError = document.getElementById('gateError');
+    const togglePassword = document.getElementById('togglePassword');
+    const logoutBtn = document.getElementById('logoutBtn');
+
+    function unlock() {
+      document.body.classList.add('unlocked');
+      sessionStorage.setItem('neuroteacher_access', 'granted');
+      window.scrollTo(0, 0);
+    }
+
+    function lock() {
+      sessionStorage.removeItem('neuroteacher_access');
+      document.body.classList.remove('unlocked');
+      passwordInput.value = '';
+      gateError.textContent = '';
+    }
+
+    async function sha256(text) {
+      const data = new TextEncoder().encode(text);
+      const digest = await crypto.subtle.digest('SHA-256', data);
+      return Array.from(new Uint8Array(digest))
+        .map(b => b.toString(16).padStart(2, '0'))
+        .join('');
+    }
+
+    if (sessionStorage.getItem('neuroteacher_access') === 'granted') {
+      document.body.classList.add('unlocked');
+    }
+
+    form.addEventListener('submit', async (event) => {
+      event.preventDefault();
+      gateError.textContent = '';
+      const entered = passwordInput.value.trim();
+      const hash = await sha256(entered);
+      if (hash === PASSWORD_HASH) {
+        unlock();
+      } else {
+        gateError.textContent = 'Пароль не подошёл. Проверьте раскладку и попробуйте ещё раз.';
+        passwordInput.select();
+      }
+    });
+
+    togglePassword.addEventListener('click', () => {
+      const isPassword = passwordInput.type === 'password';
+      passwordInput.type = isPassword ? 'text' : 'password';
+      togglePassword.setAttribute('aria-label', isPassword ? 'Скрыть пароль' : 'Показать пароль');
+    });
+
+    logoutBtn.addEventListener('click', lock);
+
+    document.querySelectorAll('[data-copy]').forEach(button => {
+      button.addEventListener('click', async () => {
+        const id = button.getAttribute('data-copy');
+        const text = document.getElementById(id).innerText;
+        await navigator.clipboard.writeText(text);
+        const old = button.textContent;
+        button.textContent = 'Скопировано ✓';
+        button.classList.add('copied');
+        setTimeout(() => {
+          button.textContent = old;
+          button.classList.remove('copied');
+        }, 1600);
+      });
+    });
+  </script>
+</body>
+</html>
