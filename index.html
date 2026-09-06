@@ -5,17 +5,17 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="robots" content="noindex,nofollow" />
   <meta name="theme-color" content="#f7ede5" />
-  <title>Нейропедагог — материалы для учителя</title>
+  <title>Светлана Быкова — закрытые материалы</title>
 
-  <!-- Можно заменить шрифты, если захочется другой характер -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Great+Vibes&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet">
 
   <style>
     :root {
       --bg: #fbf7f2;
-      --paper: #fffdfa;
+      --paper: rgba(255, 253, 250, .86);
+      --paper-solid: #fffdfa;
       --peach-50: #fff4ec;
       --peach-100: #f9e4d7;
       --peach-200: #f3cfbd;
@@ -46,11 +46,10 @@
 
     a { color: inherit; }
     button, input { font: inherit; }
-
     .site-shell { display: none; }
     body.unlocked .site-shell { display: block; }
 
-    /* ---------- Вход по паролю ---------- */
+    /* Gate */
     .gate {
       min-height: 100vh;
       display: grid;
@@ -63,9 +62,7 @@
         radial-gradient(circle at 88% 8%, rgba(249, 228, 215, .85), transparent 30%),
         linear-gradient(145deg, #fffaf6 0%, #f7e9df 48%, #fbf7f2 100%);
     }
-
     body.unlocked .gate { display: none; }
-
     .gate::before,
     .gate::after {
       content: "";
@@ -78,9 +75,8 @@
     }
     .gate::before { left: -180px; bottom: -170px; }
     .gate::after { right: -150px; top: -160px; width: 360px; height: 360px; }
-
     .gate-card {
-      width: min(520px, 100%);
+      width: min(540px, 100%);
       padding: 54px 46px 42px;
       border: 1px solid rgba(169, 95, 70, .14);
       border-radius: 36px;
@@ -91,10 +87,9 @@
       position: relative;
       z-index: 1;
     }
-
     .monogram {
-      width: 66px;
-      height: 66px;
+      width: 74px;
+      height: 74px;
       display: grid;
       place-items: center;
       margin: 0 auto 22px;
@@ -102,12 +97,10 @@
       border: 1px solid rgba(169, 95, 70, .25);
       background: linear-gradient(145deg, #fff8f2, #f5dccd);
       color: var(--terracotta);
-      font-family: "Cormorant Garamond", serif;
-      font-size: 32px;
-      font-weight: 700;
-      letter-spacing: .03em;
+      font-family: "Great Vibes", cursive;
+      font-size: 34px;
+      line-height: 1;
     }
-
     .eyebrow {
       margin: 0 0 10px;
       text-transform: uppercase;
@@ -116,368 +109,260 @@
       font-weight: 700;
       color: var(--terracotta);
     }
-
     .gate h1,
     .hero h1,
-    .section-title h2 {
+    .section-title h2,
+    .hero-note,
+    .video-body h3,
+    .editorial-intro h3,
+    .work-content h3,
+    .closing h3 {
       font-family: "Cormorant Garamond", Georgia, serif;
       font-weight: 600;
       letter-spacing: -.03em;
     }
-
     .gate h1 {
       font-size: clamp(42px, 7vw, 64px);
       line-height: .95;
       margin: 0 0 16px;
     }
-
     .gate p.sub {
       margin: 0 auto 30px;
       max-width: 390px;
       line-height: 1.7;
       color: var(--muted);
     }
-
-    .password-row {
-      display: flex;
-      gap: 10px;
-      align-items: stretch;
-    }
-
+    .password-row { display: flex; gap: 10px; align-items: stretch; }
     .password-wrap { flex: 1; position: relative; }
     .password-wrap input {
-      width: 100%;
-      height: 54px;
-      border: 1px solid var(--line);
-      border-radius: 16px;
-      padding: 0 48px 0 17px;
-      background: #fff;
-      color: var(--ink);
-      outline: none;
-      transition: .2s ease;
+      width: 100%; height: 54px; border: 1px solid var(--line); border-radius: 16px;
+      padding: 0 48px 0 17px; background: #fff; color: var(--ink); outline: none; transition: .2s ease;
     }
-    .password-wrap input:focus {
-      border-color: rgba(169, 95, 70, .5);
-      box-shadow: 0 0 0 4px rgba(201, 120, 88, .08);
-    }
+    .password-wrap input:focus { border-color: rgba(169, 95, 70, .5); box-shadow: 0 0 0 4px rgba(201, 120, 88, .08); }
     .toggle-pass {
-      position: absolute;
-      top: 50%; right: 12px;
-      transform: translateY(-50%);
-      border: 0;
-      background: transparent;
-      color: var(--muted);
-      cursor: pointer;
-      padding: 7px;
-      border-radius: 10px;
+      position: absolute; top: 50%; right: 12px; transform: translateY(-50%); border: 0;
+      background: transparent; color: var(--muted); cursor: pointer; padding: 7px; border-radius: 10px;
     }
     .gate-submit {
-      border: 0;
-      border-radius: 16px;
-      padding: 0 21px;
-      background: linear-gradient(135deg, var(--terracotta), #c98262);
-      color: white;
-      font-weight: 700;
-      cursor: pointer;
-      box-shadow: 0 10px 24px rgba(169, 95, 70, .22);
+      border: 0; border-radius: 16px; padding: 0 21px; background: linear-gradient(135deg, var(--terracotta), #c98262);
+      color: white; font-weight: 700; cursor: pointer; box-shadow: 0 10px 24px rgba(169, 95, 70, .22);
       transition: transform .2s ease, box-shadow .2s ease;
     }
     .gate-submit:hover { transform: translateY(-1px); box-shadow: 0 14px 30px rgba(169, 95, 70, .28); }
     .gate-error { min-height: 23px; margin: 12px 0 0; color: #a54747; font-size: 13px; }
     .gate-note { margin-top: 22px; color: #9a8c84; font-size: 12px; }
 
-    /* ---------- Основной сайт ---------- */
+    /* Main site */
     .topbar {
-      position: sticky;
-      top: 0;
-      z-index: 20;
-      backdrop-filter: blur(16px);
-      background: rgba(251, 247, 242, .82);
-      border-bottom: 1px solid rgba(111, 76, 62, .10);
+      position: sticky; top: 0; z-index: 20; backdrop-filter: blur(16px);
+      background: rgba(251, 247, 242, .82); border-bottom: 1px solid rgba(111, 76, 62, .10);
     }
     .topbar-inner {
-      width: min(1180px, calc(100% - 36px));
-      margin: auto;
-      min-height: 72px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 22px;
+      width: min(1220px, calc(100% - 36px)); margin: auto; min-height: 82px;
+      display: flex; align-items: center; justify-content: space-between; gap: 22px;
     }
-    .brand {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      text-decoration: none;
-    }
+    .brand { display: flex; align-items: center; gap: 14px; text-decoration: none; }
     .brand-mark {
-      width: 38px;
-      height: 38px;
-      border-radius: 50%;
-      display: grid;
-      place-items: center;
-      background: var(--peach-100);
-      color: var(--terracotta);
-      font-family: "Cormorant Garamond", serif;
-      font-weight: 700;
-      font-size: 20px;
+      width: 44px; height: 44px; border-radius: 50%; display: grid; place-items: center;
+      background: linear-gradient(145deg, #fff8f2, #f3ded0); color: var(--terracotta);
+      font-family: "Great Vibes", cursive; font-size: 27px; border: 1px solid rgba(169, 95, 70, .16);
     }
-    .brand strong { font-size: 14px; letter-spacing: .09em; text-transform: uppercase; }
+    .brand-copy { display: flex; flex-direction: column; gap: 2px; }
+    .brand-copy strong {
+      font-size: 15px; letter-spacing: .04em; text-transform: uppercase;
+    }
+    .brand-copy a {
+      font-size: 12px; color: var(--terracotta); text-decoration: none;
+    }
+    .brand-copy a:hover { text-decoration: underline; }
     .nav { display: flex; align-items: center; gap: 24px; }
     .nav a {
-      text-decoration: none;
-      font-size: 13px;
-      color: var(--muted);
-      transition: color .2s ease;
+      text-decoration: none; font-size: 13px; color: var(--muted); transition: color .2s ease;
     }
     .nav a:hover { color: var(--terracotta); }
     .logout {
-      border: 1px solid var(--line);
-      background: rgba(255,255,255,.65);
-      color: var(--muted);
-      border-radius: 999px;
-      padding: 9px 13px;
-      cursor: pointer;
-      font-size: 12px;
+      border: 1px solid var(--line); background: rgba(255,255,255,.65); color: var(--muted);
+      border-radius: 999px; padding: 9px 13px; cursor: pointer; font-size: 12px;
     }
 
-    .container { width: min(1180px, calc(100% - 36px)); margin: auto; }
+    .container { width: min(1220px, calc(100% - 36px)); margin: auto; }
 
     .hero {
-      padding: 88px 0 62px;
-      position: relative;
+      padding: 78px 0 32px; position: relative; overflow: hidden;
+    }
+    .hero::before {
+      content: ""; position: absolute; left: -180px; bottom: -120px; width: 420px; height: 420px;
+      background: radial-gradient(circle, rgba(243, 207, 189, .55), transparent 68%);
+      pointer-events: none;
     }
     .hero-grid {
-      display: grid;
-      grid-template-columns: 1.2fr .8fr;
-      gap: 56px;
-      align-items: end;
+      display: grid; grid-template-columns: 1.05fr .95fr; gap: 42px; align-items: center;
     }
     .hero h1 {
-      font-size: clamp(54px, 8vw, 104px);
-      line-height: .88;
-      margin: 4px 0 28px;
-      max-width: 900px;
+      font-size: clamp(58px, 7.3vw, 108px); line-height: .9; margin: 4px 0 22px; max-width: 760px;
     }
     .hero h1 em { color: var(--terracotta); font-style: normal; }
     .hero-copy {
-      max-width: 700px;
-      font-size: 18px;
-      line-height: 1.75;
-      color: var(--muted);
+      max-width: 650px; font-size: 18px; line-height: 1.75; color: var(--muted); margin: 0 0 26px;
     }
-    .hero-aside {
-      border-left: 1px solid var(--line);
-      padding-left: 28px;
-      margin-bottom: 10px;
+    .hero-note-row {
+      display: flex; flex-wrap: wrap; gap: 22px; color: var(--terracotta); margin: 24px 0 0;
     }
-    .hero-aside p {
-      margin: 0 0 22px;
-      font-family: "Cormorant Garamond", serif;
-      font-size: 27px;
-      line-height: 1.25;
+    .hero-note-item {
+      display: flex; align-items: center; gap: 10px; font-size: 12px; letter-spacing: .12em; text-transform: uppercase;
     }
-    .chips { display: flex; flex-wrap: wrap; gap: 8px; }
+    .hero-note-item svg { width: 24px; height: 24px; flex: 0 0 auto; }
+    .hero-right {
+      position: relative; display: flex; justify-content: center; align-items: center;
+    }
+    .hero-right::before {
+      content: ""; position: absolute; inset: 3% 0 5% 2%; border-radius: 42% 58% 38% 62% / 46% 37% 63% 54%;
+      background: linear-gradient(145deg, rgba(243, 207, 189, .85), rgba(255, 245, 238, .2));
+      transform: rotate(-6deg);
+    }
+    .hero-visual {
+      position: relative; width: min(540px, 100%); aspect-ratio: 5 / 6; border-radius: 36px;
+      overflow: hidden; box-shadow: var(--shadow); background: linear-gradient(145deg, #f1d4c5, #f9ebe2);
+    }
+    .hero-visual img {
+      width: 100%; height: 100%; object-fit: cover; object-position: center top; display: block;
+    }
+    .hero-script {
+      position: absolute; top: 28px; right: 8px; font-family: "Great Vibes", cursive;
+      font-size: 38px; line-height: 1.04; color: var(--terracotta); text-align: right;
+      text-shadow: 0 1px 0 rgba(255,255,255,.65);
+    }
+    .hero-script small {
+      display: block; font-size: 20px; margin-top: 6px;
+    }
+    .chips { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 18px; }
     .chip {
-      padding: 8px 12px;
-      border-radius: 999px;
-      border: 1px solid var(--line);
-      background: rgba(255,255,255,.55);
-      color: var(--muted);
-      font-size: 12px;
+      padding: 8px 12px; border-radius: 999px; border: 1px solid var(--line);
+      background: rgba(255,255,255,.55); color: var(--muted); font-size: 12px;
+    }
+
+    .quick-links {
+      display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; margin-top: 26px;
+    }
+    .quick-card {
+      display: grid; grid-template-columns: 64px 1fr auto; gap: 16px; align-items: center;
+      padding: 24px 22px; border-radius: 26px; background: var(--paper);
+      border: 1px solid var(--line); box-shadow: var(--shadow); text-decoration: none;
+    }
+    .quick-icon {
+      width: 64px; height: 64px; border-radius: 50%; display: grid; place-items: center;
+      background: linear-gradient(145deg, #fff8f2, #f2ddd1); color: var(--terracotta);
+      border: 1px solid rgba(169,95,70,.1);
+    }
+    .quick-icon svg { width: 28px; height: 28px; }
+    .quick-card h3 {
+      margin: 0 0 5px; font-family: "Cormorant Garamond", serif; font-size: 26px; line-height: 1;
+    }
+    .quick-card p { margin: 0; color: var(--muted); line-height: 1.45; font-size: 14px; }
+    .quick-arrow {
+      width: 40px; height: 40px; border-radius: 50%; display: grid; place-items: center;
+      border: 1px solid var(--line); color: var(--terracotta); font-size: 20px;
     }
 
     section { padding: 58px 0; }
     .section-title {
-      display: grid;
-      grid-template-columns: 1fr auto;
-      align-items: end;
-      gap: 18px;
-      margin-bottom: 28px;
+      display: grid; grid-template-columns: 1fr auto; align-items: end; gap: 18px; margin-bottom: 28px;
     }
     .section-title h2 { font-size: clamp(42px, 5.4vw, 72px); line-height: .95; margin: 0; }
-    .section-title p { margin: 0 0 6px; max-width: 430px; color: var(--muted); line-height: 1.6; }
+    .section-title p { margin: 0 0 6px; max-width: 520px; color: var(--muted); line-height: 1.6; }
 
     .video-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 22px; }
     .video-card {
-      overflow: hidden;
-      border: 1px solid var(--line);
-      border-radius: var(--radius-xl);
-      background: rgba(255, 253, 250, .86);
-      box-shadow: var(--shadow);
+      overflow: hidden; border: 1px solid var(--line); border-radius: var(--radius-xl);
+      background: var(--paper); box-shadow: var(--shadow);
     }
     .video-frame {
-      aspect-ratio: 16 / 9;
-      background: linear-gradient(145deg, #ead0c0, #f8ede5);
-      border-bottom: 1px solid var(--line);
+      aspect-ratio: 16 / 9; background: linear-gradient(145deg, #ead0c0, #f8ede5); border-bottom: 1px solid var(--line);
     }
     .video-frame video { width: 100%; height: 100%; display: block; object-fit: cover; background: #261f1b; }
     .video-body { padding: 28px 30px 30px; }
     .step-line { display: flex; justify-content: space-between; gap: 18px; color: var(--terracotta); font-size: 12px; text-transform: uppercase; letter-spacing: .13em; font-weight: 700; }
-    .video-body h3 {
-      margin: 15px 0 10px;
-      font-family: "Cormorant Garamond", serif;
-      font-size: 37px;
-      line-height: 1.05;
-    }
+    .video-body h3 { margin: 15px 0 10px; font-size: 37px; line-height: 1.05; }
     .video-body p { color: var(--muted); line-height: 1.65; margin: 0; }
 
     .editorial-card {
-      display: grid;
-      grid-template-columns: .8fr 1.2fr;
-      overflow: hidden;
-      border-radius: var(--radius-xl);
-      border: 1px solid var(--line);
-      background: var(--paper);
-      box-shadow: var(--shadow);
+      display: grid; grid-template-columns: .8fr 1.2fr; overflow: hidden; border-radius: var(--radius-xl);
+      border: 1px solid var(--line); background: var(--paper-solid); box-shadow: var(--shadow);
     }
     .editorial-intro {
-      min-height: 360px;
-      padding: 44px;
-      background:
-        radial-gradient(circle at 22% 18%, rgba(255,255,255,.78), transparent 24%),
-        linear-gradient(145deg, #f1d4c5, #f9ebe2);
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
+      min-height: 360px; padding: 44px;
+      background: radial-gradient(circle at 22% 18%, rgba(255,255,255,.78), transparent 24%), linear-gradient(145deg, #f1d4c5, #f9ebe2);
+      display: flex; flex-direction: column; justify-content: space-between;
     }
-    .big-number {
-      font-family: "Cormorant Garamond", serif;
-      font-size: 110px;
-      line-height: .7;
-      color: rgba(169, 95, 70, .55);
-    }
-    .editorial-intro h3 {
-      font-family: "Cormorant Garamond", serif;
-      font-size: 44px;
-      margin: 0;
-      line-height: 1;
-    }
+    .big-number { font-family: "Cormorant Garamond", serif; font-size: 110px; line-height: .7; color: rgba(169, 95, 70, .55); }
+    .editorial-intro h3 { font-size: 44px; margin: 0; line-height: 1; }
     .editorial-content { padding: 40px; }
     .editorial-content > p { margin-top: 0; color: var(--muted); line-height: 1.7; }
 
-    .prompt-box {
-      position: relative;
-      border: 1px solid var(--line);
-      border-radius: 20px;
-      background: #fff;
-      padding: 24px 24px 22px;
-    }
-    .prompt-box pre {
-      margin: 0;
-      white-space: pre-wrap;
-      font: 500 13px/1.75 "Manrope", sans-serif;
-      color: #413833;
-    }
+    .prompt-box { position: relative; border: 1px solid var(--line); border-radius: 20px; background: #fff; padding: 24px 24px 22px; }
+    .prompt-box pre { margin: 0; white-space: pre-wrap; font: 500 13px/1.75 "Manrope", sans-serif; color: #413833; }
     .copy-btn {
-      margin-top: 16px;
-      border: 0;
-      border-radius: 12px;
-      background: var(--ink);
-      color: #fff;
-      padding: 10px 14px;
-      cursor: pointer;
-      font-size: 12px;
-      font-weight: 700;
+      margin-top: 16px; border: 0; border-radius: 12px; background: var(--ink); color: #fff;
+      padding: 10px 14px; cursor: pointer; font-size: 12px; font-weight: 700;
     }
     .copy-btn.copied { background: var(--terracotta); }
 
     .works { display: grid; gap: 24px; }
     .work-card {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      min-height: 430px;
-      overflow: hidden;
-      border-radius: var(--radius-xl);
-      border: 1px solid var(--line);
-      background: rgba(255,253,250,.9);
-      box-shadow: var(--shadow);
+      display: grid; grid-template-columns: 1fr 1fr; min-height: 430px; overflow: hidden; border-radius: var(--radius-xl);
+      border: 1px solid var(--line); background: rgba(255,253,250,.9); box-shadow: var(--shadow);
     }
-    .work-visual {
-      background: linear-gradient(145deg, #f6e0d4, #fff8f2);
-      position: relative;
-      min-height: 360px;
-      overflow: hidden;
-    }
+    .work-visual { background: linear-gradient(145deg, #f6e0d4, #fff8f2); position: relative; min-height: 360px; overflow: hidden; }
     .work-visual img { width: 100%; height: 100%; object-fit: cover; display: block; }
     .work-placeholder {
-      position: absolute;
-      inset: 0;
-      display: grid;
-      place-items: center;
-      padding: 32px;
-      text-align: center;
-      color: var(--terracotta);
+      position: absolute; inset: 0; display: grid; place-items: center; padding: 32px; text-align: center; color: var(--terracotta);
     }
     .work-placeholder span {
-      display: inline-block;
-      border: 1px dashed rgba(169, 95, 70, .35);
-      border-radius: 18px;
-      padding: 26px;
-      background: rgba(255,255,255,.45);
+      display: inline-block; border: 1px dashed rgba(169, 95, 70, .35); border-radius: 18px; padding: 26px; background: rgba(255,255,255,.45);
     }
     .work-content { padding: 38px; }
-    .work-content h3 {
-      margin: 8px 0 10px;
-      font-family: "Cormorant Garamond", serif;
-      font-size: 39px;
-      line-height: 1;
-    }
+    .work-content h3 { margin: 8px 0 10px; font-size: 39px; line-height: 1; }
     .work-content > p { color: var(--muted); line-height: 1.65; }
 
     .closing {
-      margin: 46px 0 72px;
-      padding: 48px;
-      border-radius: var(--radius-xl);
-      background: #2d2521;
-      color: #fff8f2;
-      display: grid;
-      grid-template-columns: 1fr auto;
-      gap: 24px;
-      align-items: center;
+      margin: 46px 0 72px; padding: 48px; border-radius: var(--radius-xl); background: #2d2521;
+      color: #fff8f2; display: grid; grid-template-columns: 1fr auto; gap: 24px; align-items: center;
     }
-    .closing h3 { margin: 0; font-family: "Cormorant Garamond", serif; font-size: 42px; line-height: 1; }
+    .closing h3 { margin: 0; font-size: 42px; line-height: 1; }
     .closing p { margin: 10px 0 0; color: rgba(255,255,255,.66); }
     .closing-tag { border: 1px solid rgba(255,255,255,.22); border-radius: 999px; padding: 10px 14px; font-size: 12px; }
 
-    footer {
-      padding: 0 0 34px;
-      text-align: center;
-      color: #95877f;
-      font-size: 12px;
-    }
+    footer { padding: 0 0 34px; text-align: center; color: #95877f; font-size: 12px; }
 
+    @media (max-width: 1020px) {
+      .hero-grid, .video-grid, .editorial-card, .work-card, .closing, .quick-links { grid-template-columns: 1fr; }
+      .hero-right { order: -1; }
+      .hero-visual { max-width: 520px; margin: 0 auto; }
+    }
     @media (max-width: 900px) {
       .nav a { display: none; }
-      .hero-grid, .video-grid, .editorial-card, .work-card, .closing { grid-template-columns: 1fr; }
-      .hero-aside { border-left: 0; border-top: 1px solid var(--line); padding: 24px 0 0; }
       .section-title { grid-template-columns: 1fr; }
       .section-title p { max-width: 650px; }
       .editorial-intro { min-height: 280px; }
     }
-
     @media (max-width: 560px) {
       .gate-card { padding: 42px 24px 32px; border-radius: 28px; }
       .password-row { flex-direction: column; }
       .gate-submit { height: 50px; }
-      .hero { padding-top: 58px; }
+      .hero { padding-top: 54px; }
       .video-body, .editorial-content, .work-content, .closing { padding: 26px; }
       .editorial-intro { padding: 30px; }
       .hero-copy { font-size: 16px; }
+      .hero-script { font-size: 32px; right: 2px; }
+      .brand-copy strong { font-size: 13px; }
+      .brand-copy a { font-size: 11px; }
     }
   </style>
 </head>
 <body>
-
-  <!-- ================================================
-       ЭКРАН ВХОДА
-       Пароль сейчас: «нейропедагог».
-       В коде хранится только SHA-256 хеш пароля.
-       ВАЖНО: это защита интерфейса, а не полноценный серверный paywall.
-       ================================================ -->
   <section class="gate" id="gate">
     <div class="gate-card">
-      <div class="monogram">Н</div>
+      <div class="monogram">СБ</div>
       <p class="eyebrow">Закрытые материалы</p>
       <h1>Добро пожаловать</h1>
       <p class="sub">Введите пароль, который вы получили после оплаты. После входа откроются видеоуроки, промпты и примеры материалов.</p>
@@ -497,15 +382,15 @@
     </div>
   </section>
 
-  <!-- ================================================
-       ОСНОВНОЙ САЙТ
-       ================================================ -->
   <div class="site-shell" id="siteShell">
     <header class="topbar">
       <div class="topbar-inner">
         <a href="#top" class="brand">
-          <span class="brand-mark">Н</span>
-          <strong>Нейропедагог</strong>
+          <span class="brand-mark">СБ</span>
+          <span class="brand-copy">
+            <strong>Светлана Быкова</strong>
+            <span><a href="https://shkatulka.sistema-math.ru" target="_blank" rel="noopener">shkatulka.sistema-math.ru</a></span>
+          </span>
         </a>
         <nav class="nav" aria-label="Навигация">
           <a href="#lessons">Видеоуроки</a>
@@ -523,15 +408,66 @@
             <p class="eyebrow">Практикум для преподавателей</p>
             <h1>От идеи к <em>готовому продукту</em></h1>
             <p class="hero-copy">Создаём цифровые материалы с нейросетями: интерактивный тренажёр, рабочую тетрадь, публикацию в интернете и собственную библиотеку готовых решений.</p>
-          </div>
-          <aside class="hero-aside">
-            <p>Не просто «что умеет ИИ», а полный путь — от запроса до ссылки, которую можно отправить ученику.</p>
             <div class="chips">
               <span class="chip">2 видеоурока</span>
               <span class="chip">готовые промпты</span>
               <span class="chip">примеры работ</span>
             </div>
-          </aside>
+            <div class="hero-note-row">
+              <div class="hero-note-item">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M9 18h6"/><path d="M10 22h4"/><path d="M7 14a6 6 0 1 1 10 0c-.62.7-1.1 1.64-1.24 2.57H8.24C8.1 15.64 7.62 14.7 7 14Z"/></svg>
+                <span>Экономит время</span>
+              </div>
+              <div class="hero-note-item">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M16 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="10" cy="7" r="4"/><path d="M20 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+                <span>Вдохновляет на идеи</span>
+              </div>
+              <div class="hero-note-item">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M4 19h16"/><path d="M7 16V8"/><path d="M12 16V5"/><path d="M17 16v-3"/></svg>
+                <span>Помогает развиваться</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="hero-right">
+            <div class="hero-visual">
+              <img src="hero-photo.png" alt="Светлана Быкова" />
+            </div>
+            <div class="hero-script">Больше возможностей<br>для важных дел<small>♡</small></div>
+          </div>
+        </div>
+
+        <div class="container quick-links">
+          <a href="#lessons" class="quick-card">
+            <div class="quick-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><polygon points="8,6 18,12 8,18 8,6"></polygon></svg>
+            </div>
+            <div>
+              <h3>Видео 1</h3>
+              <p>Создаём интерактивный тренажёр</p>
+            </div>
+            <span class="quick-arrow">›</span>
+          </a>
+          <a href="#lessons" class="quick-card">
+            <div class="quick-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><rect x="3" y="4" width="18" height="12" rx="2"/><path d="M8 20h8"/><path d="M12 16v4"/></svg>
+            </div>
+            <div>
+              <h3>Видео 2</h3>
+              <p>Netlify + рабочая тетрадь ВПР 7</p>
+            </div>
+            <span class="quick-arrow">›</span>
+          </a>
+          <a href="#workbook" class="quick-card">
+            <div class="quick-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/><path d="M8 13h8"/><path d="M8 17h6"/></svg>
+            </div>
+            <div>
+              <h3>Рабочая тетрадь</h3>
+              <p>ВПР 7 класс, задание 1</p>
+            </div>
+            <span class="quick-arrow">›</span>
+          </a>
         </div>
       </section>
 
@@ -542,7 +478,7 @@
               <p class="eyebrow">Модуль 01</p>
               <h2>Два ключевых видеоурока</h2>
             </div>
-            <p>В первом видео создаём интерактивный тренажёр, во втором — большую рабочую тетрадь.</p>
+            <p>В первом видео создаём интерактивный тренажёр, во втором — размещаем его на Netlify и параллельно собираем рабочую тетрадь ВПР 7 класса, задание 1, без теории.</p>
           </div>
 
           <div class="video-grid">
@@ -556,7 +492,7 @@
               <div class="video-body">
                 <div class="step-line"><span>Видеоурок 01</span><span>Создание</span></div>
                 <h3>Создаём интерактивный тренажёр</h3>
-                <p>От идеи и структуры заданий — до готового HTML-кода с проверкой ответов, подсказками и аккуратным интерфейсом.</p>
+                <p>Пошагово создаём HTML-тренажёр: задания, проверка ответов, подсказки, логика переходов и готовый код, который можно сразу открыть в браузере.</p>
               </div>
             </article>
 
@@ -568,9 +504,9 @@
                 </video>
               </div>
               <div class="video-body">
-                <div class="step-line"><span>Видеоурок 02</span><span>Создание</span></div>
-                <h3>Создаём рабочую тетрадь</h3>
-                <p>От структуры и методических требований — до большой рабочей тетради с теорией, разборами, тренажёром и ответами.</p>
+                <div class="step-line"><span>Видеоурок 02</span><span>Публикация + тетрадь</span></div>
+                <h3>Netlify и рабочая тетрадь</h3>
+                <p>Размещаем тренажёр на Netlify и создаём рабочую тетрадь без теории: только перечень заданий ВПР 7 класса, задание 1, в удобном формате для работы.</p>
               </div>
             </article>
           </div>
@@ -582,33 +518,32 @@
           <div class="section-title">
             <div>
               <p class="eyebrow">Модуль 02</p>
-              <h2>Рабочая тетрадь</h2>
+              <h2>Рабочая тетрадь: ВПР 7, задание 1</h2>
             </div>
-            <p>От структуры темы до цельного материала: теория, разборы, тренажёр и ответы.</p>
+            <p>Шаблон промпта для тетради без теории — только тренировка и аккуратная подача заданий.</p>
           </div>
 
           <div class="editorial-card">
             <div class="editorial-intro">
               <div class="big-number">02</div>
-              <h3>Создаём большую рабочую тетрадь</h3>
+              <h3>Создаём тетрадь без теории</h3>
             </div>
             <div class="editorial-content">
-              <p>Здесь можно оставить основной промпт, который участники копируют и адаптируют под свой предмет и тему.</p>
+              <p>Этот промпт можно использовать как основу, если вы хотите быстро собрать тренировочную рабочую тетрадь с перечнем заданий, без длинных объяснений.</p>
               <div class="prompt-box">
-                <pre id="prompt-workbook">Я учитель [предмет]. Создай структуру большой рабочей тетради по теме «[тема]» для [класс] класса.
+                <pre id="prompt-workbook">Я учитель математики. Создай рабочую тетрадь по ВПР для 7 класса, задание 1.
 
-Для каждого смыслового блока предусмотрите:
-— краткую теорию;
-— понятный алгоритм;
-— полностью разобранный пример;
-— типичные ошибки;
-— тренировочные задания от простого к сложному;
-— самостоятельные задания;
-— ответы и решения для учителя.
+Требования:
+— тетрадь должна быть без теоретического блока;
+— не нужно давать длинные объяснения и разборы;
+— основной формат: перечень заданий для тренировки;
+— задания нужно расположить от более простых к более сложным;
+— оформи материал аккуратно, современно и удобно для печати;
+— оставь место для записи ответов или краткого решения;
+— можно разделить задания на небольшие тематические блоки;
+— в конце отдельно дай ответы для учителя.
 
-Сначала покажи только структуру тетради. Не создавай весь материал, пока структура не будет утверждена.
-
-После утверждения структуры создавай материал по разделам. Перед финальной выдачей проверь задания, ответы и соответствие всем моим требованиям.</pre>
+Сначала предложи структуру тетради. После утверждения создай полный материал.</pre>
                 <button class="copy-btn" data-copy="prompt-workbook" type="button">Скопировать промпт</button>
               </div>
             </div>
@@ -621,21 +556,21 @@
           <div class="section-title">
             <div>
               <p class="eyebrow">Отдельный шаг</p>
-              <h2>Публикуем тренажёр на Netlify</h2>
+              <h2>Как разместить на Netlify</h2>
             </div>
-            <p>После видео 1 готовый HTML-файл можно быстро превратить в ссылку для учеников или коллег.</p>
+            <p>Короткая памятка: после создания HTML-файла вы быстро превращаете его в готовую ссылку для учеников и коллег.</p>
           </div>
 
           <div class="editorial-card">
             <div class="editorial-intro">
               <div class="big-number">03</div>
-              <h3>Из файла — в готовую ссылку</h3>
+              <h3>Из файла — в ссылку</h3>
             </div>
             <div class="editorial-content">
               <p><strong>Шаг 1.</strong> Сохраните код тренажёра как <code>index.html</code>.</p>
-              <p><strong>Шаг 2.</strong> Откройте Netlify Drop.</p>
+              <p><strong>Шаг 2.</strong> Откройте сервис Netlify Drop.</p>
               <p><strong>Шаг 3.</strong> Перетащите файл <code>index.html</code> или папку проекта в окно загрузки.</p>
-              <p><strong>Шаг 4.</strong> Дождитесь публикации и скопируйте готовую ссылку.</p>
+              <p><strong>Шаг 4.</strong> Дождитесь публикации, протестируйте сайт и скопируйте готовую ссылку.</p>
             </div>
           </div>
         </div>
@@ -729,7 +664,7 @@
               <h3>Сохраняйте не только результат, но и способ его создания.</h3>
               <p>Так постепенно собирается собственная библиотека промптов и шаблонов.</p>
             </div>
-            <div class="closing-tag">Нейропедагог</div>
+            <div class="closing-tag">Светлана Быкова</div>
           </div>
         </div>
       </section>
@@ -766,9 +701,7 @@
     async function sha256(text) {
       const data = new TextEncoder().encode(text);
       const digest = await crypto.subtle.digest('SHA-256', data);
-      return Array.from(new Uint8Array(digest))
-        .map(b => b.toString(16).padStart(2, '0'))
-        .join('');
+      return Array.from(new Uint8Array(digest)).map(b => b.toString(16).padStart(2, '0')).join('');
     }
 
     if (sessionStorage.getItem('neuroteacher_access') === 'granted') {
