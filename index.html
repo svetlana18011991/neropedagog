@@ -356,7 +356,59 @@
       border: 1px solid var(--line); background: rgba(255,253,250,.9); box-shadow: var(--shadow);
     }
     .work-visual { background: linear-gradient(145deg, #f6e0d4, #fff8f2); position: relative; min-height: 360px; overflow: hidden; }
-    .work-visual img { width: 100%; height: 100%; object-fit: cover; display: block; }
+    .work-visual img { width: 100%; height: 100%; object-fit: cover; display: block; position: relative; z-index: 2; }
+
+    /* Главный пример рабочего листа */
+    .work-visual.degree-preview {
+      min-height: 520px;
+      padding: 34px;
+      display: flex;
+      align-items: flex-start;
+      justify-content: center;
+      background:
+        radial-gradient(circle at 14% 10%, rgba(255,255,255,.92), transparent 24%),
+        radial-gradient(circle at 88% 86%, rgba(232,174,145,.30), transparent 28%),
+        linear-gradient(145deg, #f4d8ca 0%, #fff8f2 52%, #f1d5c7 100%);
+    }
+    .work-visual.degree-preview::before {
+      content: "";
+      position: absolute;
+      width: 300px;
+      height: 300px;
+      border-radius: 50%;
+      left: -145px;
+      bottom: -120px;
+      border: 1px solid rgba(169,95,70,.12);
+      box-shadow: 0 0 0 36px rgba(255,255,255,.16);
+    }
+    .work-visual.degree-preview::after {
+      content: "Готовый пример";
+      position: absolute;
+      top: 18px;
+      left: 20px;
+      z-index: 4;
+      padding: 8px 12px;
+      border-radius: 999px;
+      background: rgba(255,253,250,.90);
+      border: 1px solid rgba(169,95,70,.16);
+      color: var(--terracotta);
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: .14em;
+      text-transform: uppercase;
+      backdrop-filter: blur(8px);
+    }
+    .work-visual.degree-preview img {
+      width: 100%;
+      height: auto;
+      max-height: none;
+      object-fit: contain;
+      border-radius: 22px;
+      border: 8px solid rgba(255,253,250,.92);
+      outline: 1px solid rgba(169,95,70,.13);
+      box-shadow: 0 24px 54px rgba(83,53,43,.16);
+      background: #fffdfa;
+    }
     .work-placeholder {
       position: absolute; inset: 0; display: grid; place-items: center; padding: 32px; text-align: center; color: var(--terracotta);
     }
@@ -526,7 +578,7 @@
             <article class="video-card">
               <div class="video-frame">
                 <video controls preload="metadata" poster="">
-                  <source src="1.mp4" type="video/mp4" />
+                  <source src="https://github.com/svetlana18011991/neropedagog/releases/download/v1/1.mp4" type="video/mp4" />
                   Ваш браузер не поддерживает видео.
                 </video>
               </div>
@@ -629,9 +681,9 @@
 
           <div class="works">
             <article class="work-card">
-              <div class="work-visual">
-                <img src="work-1.jpg" alt="Пример работы 1" onerror="this.style.display='none'">
-                <div class="work-placeholder"><span>Здесь будет<br><strong>пример вашей работы №1</strong><br><small>файл work-1.jpg</small></span></div>
+              <div class="work-visual degree-preview">
+                <img src="степени.jpg" alt="Рабочий лист по теме «Свойства степеней»" onerror="this.style.display='none'">
+                <div class="work-placeholder"><span>Добавьте в репозиторий файл<br><strong>степени.jpg</strong><br><small>и здесь появится готовый рабочий лист</small></span></div>
               </div>
               <div class="work-content">
                 <p class="eyebrow">Пример 01</p>
