@@ -363,8 +363,10 @@
       min-height: 520px;
       padding: 34px;
       display: flex;
-      align-items: flex-start;
-      justify-content: center;
+      flex-direction: column;
+      align-items: stretch;
+      justify-content: flex-start;
+      gap: 24px;
       background:
         radial-gradient(circle at 14% 10%, rgba(255,255,255,.92), transparent 24%),
         radial-gradient(circle at 88% 86%, rgba(232,174,145,.30), transparent 28%),
@@ -380,33 +382,41 @@
       bottom: -120px;
       border: 1px solid rgba(169,95,70,.12);
       box-shadow: 0 0 0 36px rgba(255,255,255,.16);
+      pointer-events: none;
     }
-    .work-visual.degree-preview::after {
-      content: "Готовый пример";
+    .degree-page {
+      position: relative;
+      z-index: 2;
+      margin: 0;
+      padding: 12px;
+      border-radius: 26px;
+      background: rgba(255,253,250,.74);
+      border: 1px solid rgba(169,95,70,.12);
+      box-shadow: 0 18px 44px rgba(83,53,43,.10);
+    }
+    .degree-page-label {
       position: absolute;
-      top: 18px;
-      left: 20px;
+      top: 22px;
+      left: 22px;
       z-index: 4;
-      padding: 8px 12px;
+      padding: 7px 11px;
       border-radius: 999px;
-      background: rgba(255,253,250,.90);
-      border: 1px solid rgba(169,95,70,.16);
+      background: rgba(255,253,250,.92);
+      border: 1px solid rgba(169,95,70,.14);
       color: var(--terracotta);
-      font-size: 10px;
+      font-size: 9px;
       font-weight: 700;
-      letter-spacing: .14em;
+      letter-spacing: .13em;
       text-transform: uppercase;
       backdrop-filter: blur(8px);
     }
-    .work-visual.degree-preview img {
+    .degree-page img {
       width: 100%;
       height: auto;
-      max-height: none;
+      display: block;
       object-fit: contain;
-      border-radius: 22px;
-      border: 8px solid rgba(255,253,250,.92);
-      outline: 1px solid rgba(169,95,70,.13);
-      box-shadow: 0 24px 54px rgba(83,53,43,.16);
+      border-radius: 18px;
+      outline: 1px solid rgba(169,95,70,.10);
       background: #fffdfa;
     }
     .work-placeholder {
@@ -682,8 +692,14 @@
           <div class="works">
             <article class="work-card">
               <div class="work-visual degree-preview">
-                <img src="степени.jpg" alt="Рабочий лист по теме «Свойства степеней»" onerror="this.style.display='none'">
-                <div class="work-placeholder"><span>Добавьте в репозиторий файл<br><strong>степени.jpg</strong><br><small>и здесь появится готовый рабочий лист</small></span></div>
+                <figure class="degree-page">
+                  <span class="degree-page-label">Страница 1</span>
+                  <img src="степени.jpg" alt="Рабочий лист по теме «Свойства степеней», страница 1">
+                </figure>
+                <figure class="degree-page">
+                  <span class="degree-page-label">Страница 2</span>
+                  <img src="степени1.jpg" alt="Рабочий лист по теме «Свойства степеней», страница 2" onerror="this.onerror=null; this.src='сепени1.jpg';">
+                </figure>
               </div>
               <div class="work-content">
                 <p class="eyebrow">Пример 01</p>
