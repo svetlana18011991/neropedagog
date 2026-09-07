@@ -1,0 +1,1659 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="color-scheme" content="light" />
+<title>Интерактивный урок: единичная тригонометрическая окружность</title>
+<style>
+  :root{
+    --bg:#fbf6ed;
+    --card:#ffffff;
+    --card-soft:#fffaf3;
+    --text:#302b26;
+    --muted:#766d63;
+    --line:#eadbc8;
+    --line-2:#dfc7aa;
+    --primary:#d77b2d;
+    --primary-dark:#a9571d;
+    --primary-soft:#fff0dd;
+    --accent:#5d4635;
+    --accent-soft:#f7ecdd;
+    --success:#1d8f66;
+    --success-soft:#edf9f3;
+    --danger:#b84d3a;
+    --danger-soft:#fff0ea;
+    --shadow:0 18px 42px rgba(91,62,37,.10);
+    --radius-xl:30px;
+    --radius-lg:22px;
+    --radius-md:16px;
+  }
+
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{
+    margin:0;
+    font-family: "Segoe UI", Inter, Arial, sans-serif;
+    color:var(--text);
+    background:
+      radial-gradient(circle at 8% 11%, transparent 0 74px, rgba(216,146,76,.12) 75px 76px, transparent 77px),
+      radial-gradient(circle at 92% 19%, transparent 0 112px, rgba(183,125,75,.09) 113px 114px, transparent 115px),
+      linear-gradient(118deg, transparent 0 69%, rgba(210,151,94,.055) 69.15% 69.35%, transparent 69.5%),
+      linear-gradient(180deg, #fffaf2 0%, #f8f1e7 100%);
+  }
+  a{color:var(--primary-dark)}
+  button,select{font:inherit}
+  button{cursor:pointer}
+  .page{max-width:1280px;margin:0 auto;padding:28px 18px 52px;position:relative;z-index:0}
+  .page::before,.page::after{content:"";position:fixed;pointer-events:none;z-index:-1;border-radius:50%;border:1px solid rgba(205,139,75,.13)}
+  .page::before{width:360px;height:360px;left:-210px;top:38vh}
+  .page::after{width:470px;height:470px;right:-270px;bottom:-120px}
+
+  .hero{
+    position:relative;
+    overflow:hidden;
+    display:grid;
+    grid-template-columns:minmax(0,1.2fr) minmax(280px,.8fr);
+    gap:28px;
+    align-items:center;
+    padding:34px;
+    border-radius:var(--radius-xl);
+    background:
+      radial-gradient(circle at 84% 20%, rgba(255,255,255,.18) 0, rgba(255,255,255,0) 18%),
+      linear-gradient(135deg, #58402e 0%, #92562f 48%, #d78135 100%);
+    color:#fff;
+    box-shadow:var(--shadow);
+  }
+  .hero::before,
+  .hero::after{
+    content:"";
+    position:absolute;
+    border-radius:50%;
+    border:1px solid rgba(255,255,255,.15);
+    pointer-events:none;
+  }
+  .hero::before{width:280px;height:280px;right:-60px;top:-90px}
+  .hero::after{width:420px;height:420px;left:-180px;bottom:-220px}
+  .hero h1{margin:0 0 14px;font-size:clamp(32px,4.2vw,54px);line-height:1.06;letter-spacing:.01em}
+  .hero p{margin:0;font-size:18px;line-height:1.6;color:#fff5ea;max-width:780px}
+  .hero-side{
+    position:relative;
+    padding:18px 20px;
+    border-radius:26px;
+    background:rgba(255,255,255,.11);
+    border:1px solid rgba(255,255,255,.16);
+    backdrop-filter: blur(8px);
+  }
+  .hero-side h2{margin:0 0 10px;font-size:22px}
+  .hero-side ul{margin:0;padding-left:20px;line-height:1.75;color:#fff4e7}
+
+  .section{margin-top:30px}
+  .section-header{display:flex;justify-content:space-between;gap:14px;align-items:flex-end;margin-bottom:15px}
+  .section-header h2{margin:0;font-size:30px;letter-spacing:.01em}
+  .section-header p{margin:0;color:var(--muted)}
+
+  .cards{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
+  .card{
+    background:var(--card);
+    border:1px solid rgba(226,205,179,.86);
+    border-radius:var(--radius-lg);
+    box-shadow:var(--shadow);
+    padding:20px;
+  }
+  .theory-card{
+    background:linear-gradient(180deg,#fffdf8 0%, #fff8ee 100%);
+  }
+  .theory-card h3{margin:0 0 10px;font-size:18px;color:var(--accent)}
+  .theory-card p{margin:0;color:#5d554d;line-height:1.62}
+  .formula{
+    display:flex;align-items:center;justify-content:center;gap:10px;
+    min-height:62px;margin-top:14px;padding:10px 12px;
+    border-radius:16px;background:var(--accent-soft);border:1px solid #ead7be;
+    font-weight:700;color:var(--accent);text-align:center;
+  }
+
+  .math{font-family:"Cambria Math","STIX Two Math","Times New Roman",serif;font-style:italic}
+  .math-block{font-family:"Cambria Math","STIX Two Math","Times New Roman",serif;font-size:1.12rem}
+  .frac{
+    display:inline-flex;flex-direction:column;align-items:center;justify-content:center;
+    vertical-align:middle;line-height:1;min-width:1.45em;margin:0 .04em;
+  }
+  .frac .top{display:block;padding:0 .15em .08em;border-bottom:1.5px solid currentColor}
+  .frac .bottom{display:block;padding:.08em .15em 0}
+  .sqrt{display:inline-flex;align-items:flex-start;white-space:nowrap;vertical-align:middle;line-height:1}
+  .sqrt::before{content:"√";font-size:1.08em;line-height:1.02;margin-right:-.03em}
+  .sqrt .radicand{display:inline-block;border-top:1.5px solid currentColor;padding:.03em .08em 0 .08em;line-height:.92}
+  .coord-pair{white-space:nowrap}
+  .sign-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:6px 16px;width:100%;align-items:center}
+  .sign-grid span{white-space:nowrap;text-align:center}
+
+  .lesson-grid{display:grid;grid-template-columns:1fr;gap:18px;align-items:start}
+  .game-card{padding:18px;background:linear-gradient(180deg,#fffefa 0%, #fff8ee 100%)}
+  .toolbar{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:10px;margin-bottom:12px}
+  .toolbar-left,.toolbar-right{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+  .control-label{font-size:13px;color:var(--muted);font-weight:800;letter-spacing:.02em}
+  select{
+    border:1px solid var(--line-2);border-radius:12px;padding:10px 12px;
+    background:#fff;color:var(--text);min-width:120px;
+  }
+  .btn{
+    border:1px solid transparent;border-radius:13px;padding:10px 15px;font-weight:800;
+    background:#f5eadc;color:#5b4a3d;transition:transform .16s ease, box-shadow .16s ease, background .16s ease;
+  }
+  .btn:hover{transform:translateY(-1px);box-shadow:0 10px 18px rgba(42,39,67,.08)}
+  .btn.primary{background:linear-gradient(180deg,var(--primary) 0%, var(--primary-dark) 100%);color:#fff}
+  .btn.ghost{background:#fff;border-color:var(--line-2)}
+  .btn.soft{background:var(--primary-soft);color:var(--primary-dark)}
+  .check-status{display:inline-flex;align-items:center;min-height:38px;padding:7px 11px;border-radius:12px;font-size:13px;font-weight:800;line-height:1.25;background:#f8efe3;color:#665b51;border:1px solid var(--line);max-width:310px}
+  .check-status:empty{display:none}
+  .check-status.good{background:var(--success-soft);border-color:#bce2d3;color:#0d704e}
+  .check-status.bad{background:var(--danger-soft);border-color:#efc0c7;color:#9f3344}
+  .mode-note{display:flex;align-items:flex-start;gap:10px;margin:0 0 12px;padding:10px 12px;border-radius:14px;background:#fff4e5;border:1px solid #efd7b9;color:#6d513a;font-size:14px;line-height:1.45}
+  .mode-note::before{content:"↻";flex:0 0 auto;width:26px;height:26px;border-radius:50%;display:grid;place-items:center;background:#f2d0a6;color:#8c531f;font-weight:900}
+
+  .game-workbench{display:grid;grid-template-columns:minmax(0,1fr) 285px;gap:14px;align-items:start}
+  .circle-panel{padding:14px;border-radius:20px;background:#fff;border:1px solid var(--line);box-shadow: inset 0 0 0 1px rgba(255,255,255,.4)}
+  .circle-shell{
+    position:relative;width:min(100%,600px);aspect-ratio:1/1;margin:0 auto;
+    border-radius:22px;overflow:hidden;touch-action:none;user-select:none;
+    background:
+      radial-gradient(circle at center, #ffffff 0, #fffaf2 62%, #fff2df 100%);
+    border:1px solid #ead8c2;
+  }
+  .circle-shell svg{display:block;width:100%;height:100%}
+  .axis{stroke:#9d9287;stroke-width:1.5}
+  .circle{stroke:#b76528;stroke-width:3.2;fill:none}
+  .tick{stroke:#cbb89e;stroke-width:1.15}
+  .ray{stroke:#ead7bd;stroke-width:1}
+  .axis-label{font-size:18px;font-weight:800;fill:#675a50}
+  .origin-label,.unit-label{font-size:14px;fill:#84786d}
+  .quadrant{font-size:18px;font-weight:900;fill:#d8c4aa}
+  .hint-label{font-size:12px;font-weight:800;fill:var(--accent);opacity:0;transition:opacity .2s ease}
+  .show-hints .hint-label{opacity:.9}
+  .hint-layer{position:absolute;inset:0;pointer-events:none;z-index:1}
+  .hint-tag{position:absolute;transform:translate(-50%,-50%);padding:2px 6px;border-radius:9px;background:rgba(255,253,248,.86);border:1px solid rgba(224,200,169,.95);font-size:12px;font-weight:800;color:var(--accent);opacity:0;transition:opacity .2s ease;white-space:nowrap;box-shadow:0 6px 14px rgba(95,66,42,.06)}
+  .hint-tag .frac{font-size:.88em}
+  .show-hints .hint-tag{opacity:1}
+
+  .drop-layer{position:absolute;inset:0}
+  .drop-target{
+    position:absolute;transform:translate(-50%,-50%);
+    min-width:66px;min-height:42px;padding:3px 5px;
+    border-radius:15px;border:2px dashed #d9bea0;
+    background:rgba(255,252,246,.90);
+    display:flex;align-items:center;justify-content:center;
+    text-align:center;pointer-events:auto;z-index:2;
+    transition:border-color .18s ease, background .18s ease, box-shadow .18s ease, transform .18s ease;
+  }
+  .drop-target::before{
+    content:"";width:12px;height:12px;border-radius:50%;background:#ead3b7;box-shadow:0 0 0 5px rgba(234,211,183,.42);
+  }
+  .drop-target.occupied::before{display:none}
+  .drop-target.occupied{z-index:6}
+  .target-cards{display:flex;align-items:center;justify-content:center;gap:3px;flex-direction:column}
+  .circle-shell.group-mode .drop-target{min-width:42px;width:42px;min-height:42px;height:42px;padding:0;border-radius:50%;background:rgba(255,250,242,.94)}
+  .circle-shell.group-mode .drop-target.occupied{background:#fffaf1}
+  .circle-shell.group-mode .target-cards{position:absolute;left:50%;top:50%;width:96px;transform:translate(calc(-50% + var(--stack-x,0px)),calc(-50% + var(--stack-y,0px)));gap:4px;pointer-events:auto}
+  .circle-shell.group-mode .drop-target .angle-chip{width:96px;min-height:27px;padding:3px 5px;border-radius:9px;font-size:11px;line-height:1.05;box-shadow:0 4px 9px rgba(95,66,42,.09)}
+  .circle-shell.group-mode .drop-target .angle-chip .frac{font-size:.86em}
+  .drop-target.correct{border-style:solid;border-color:var(--success);background:var(--success-soft);box-shadow:0 0 0 4px rgba(29,143,102,.08)}
+  .drop-target.wrong{border-style:solid;border-color:var(--danger);background:var(--danger-soft);box-shadow:0 0 0 4px rgba(190,74,85,.08)}
+
+  .legend{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin-top:12px;color:#665d55;font-size:14px}
+  .legend-item{display:flex;align-items:center;gap:8px}
+  .legend-mark{width:18px;height:18px;border-radius:7px;border:2px dashed #d9bea0;background:#fff8ee}
+  .legend-mark.ok{border-style:solid;border-color:var(--success);background:var(--success-soft)}
+  .legend-mark.bad{border-style:solid;border-color:var(--danger);background:var(--danger-soft)}
+
+  .bank-wrap{padding:16px;border-radius:18px;background:#fff;border:1px solid var(--line);position:sticky;top:12px;align-self:start;max-height:620px;overflow:auto}
+  .bank-head{display:flex;flex-direction:column;gap:6px;align-items:flex-start;margin-bottom:12px}
+  .bank-title{font-weight:900;color:var(--accent)}
+  .bank-sub{font-size:13px;color:var(--muted)}
+  .chip-bank{display:grid;grid-template-columns:1fr 1fr;gap:10px;min-height:54px;align-items:stretch}
+  .angle-chip{
+    border:1px solid #ddc5a8;background:#fffdf8;color:#4a372b;
+    border-radius:14px;padding:10px 8px;font-weight:900;
+    box-shadow:0 8px 15px rgba(94,66,40,.08);cursor:grab;touch-action:none;user-select:none;white-space:nowrap;min-height:48px;display:flex;align-items:center;justify-content:center;
+  }
+  .angle-chip:active{cursor:grabbing}
+  .angle-chip.locked{cursor:default;background:var(--success-soft);border-color:#9ad4bf;color:#0f714f}
+  .angle-chip .frac{font-size:.94em}
+  .drag-ghost{position:fixed;z-index:99999;pointer-events:none;transform:translate(-50%,-50%) scale(1.05);box-shadow:0 18px 30px rgba(31,42,68,.2);opacity:.97}
+
+  .message{
+    margin-top:12px;min-height:48px;padding:12px 14px;border-radius:14px;border:1px solid var(--line);
+    background:#fff;color:#60574f;font-weight:700;display:flex;align-items:center;line-height:1.45
+  }
+  .message.good{background:var(--success-soft);border-color:#bce2d3;color:#0d704e}
+  .message.bad{background:var(--danger-soft);border-color:#efc0c7;color:#9f3344}
+
+  .side-card{background:linear-gradient(180deg,#fffdf8 0%, #fff6e9 100%)}
+  .side-card h3,.trainer-card h3{margin:0 0 10px;color:var(--accent)}
+  .side-card p,.trainer-card p{margin:0;color:#62594f;line-height:1.62}
+  .steps{margin:12px 0 0;padding-left:20px;color:#5e554c;line-height:1.72}
+  .steps li+li{margin-top:4px}
+  .fact{margin-top:14px;padding:14px;border-radius:16px;background:var(--primary-soft);border:1px solid #efd0aa;color:#7a4a23;line-height:1.55}
+  .tip-box{margin-top:14px;padding:14px;border-radius:16px;background:var(--accent-soft);border:1px solid #ead7be;color:#5b493b;line-height:1.58}
+  .progress-row{display:flex;justify-content:space-between;gap:8px;margin:14px 0 8px;font-size:14px;font-weight:800}
+  .progress{height:10px;background:#f1e6d7;border-radius:999px;overflow:hidden}
+  .progress > div{height:100%;width:0;background:linear-gradient(90deg, #d77b2d 0%, #b65e22 100%);transition:width .25s ease}
+  .stats{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:14px}
+  .stat-box{padding:13px;border-radius:16px;background:#fff;border:1px solid var(--line);text-align:center}
+  .stat-box strong{display:block;font-size:24px;color:var(--primary-dark)}
+  .stat-box span{display:block;margin-top:4px;font-size:13px;color:var(--muted)}
+
+  .trainers{display:grid;grid-template-columns:1fr 1fr 1fr;gap:18px}
+  .trainer-card{min-height:100%;background:linear-gradient(180deg,#ffffff 0%, #fff8ee 100%)}
+  .mini-grid{display:grid;grid-template-columns:minmax(220px,.86fr) 1fr;gap:18px;align-items:center}
+  .mini-circle{width:100%;max-width:310px;aspect-ratio:1;border:1px solid var(--line);background:#fffdf8;border-radius:18px}
+  .question{font-size:20px;font-weight:900;line-height:1.35;margin-bottom:10px;color:#4b382c}
+  .answers{display:grid;gap:9px}
+  .answer-btn{
+    border:1px solid #e2cfb8;background:#fff;border-radius:13px;padding:11px 12px;text-align:left;font-weight:800;color:#4e3d31;
+  }
+  .answer-btn:hover{background:#fff8ee}
+  .answer-btn.correct{background:var(--success-soft);border-color:#a8d8c3;color:#0f714f}
+  .answer-btn.wrong{background:var(--danger-soft);border-color:#efc0c7;color:#a03849}
+  .answer-btn .frac{font-size:.93em}
+  .trainer-feedback{min-height:28px;margin-top:9px;font-size:14px;font-weight:800;color:#74695e;line-height:1.45}
+  .quad-board{display:grid;grid-template-columns:1fr 1fr;gap:9px;margin:14px 0}
+  .quad-cell{min-height:88px;border:1px solid var(--line);border-radius:14px;padding:12px;background:#fffdf8;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center}
+  .quad-cell strong{font-size:18px;color:var(--primary-dark)}
+  .small{font-size:13px;color:var(--muted)}
+
+
+
+  /* ---- Тренажёр табличных значений ---- */
+  .trig-theory-strip{
+    display:flex;flex-wrap:wrap;gap:12px;align-items:center;justify-content:center;
+    margin-bottom:16px;padding:14px 16px;border:1px solid var(--line);border-radius:18px;
+    background:linear-gradient(135deg,#fffdf8 0%,#fff3df 100%);color:#5c4a3b;
+  }
+  .trig-theory-strip .formula-piece{display:flex;align-items:center;gap:8px;padding:7px 10px;border-radius:12px;background:rgba(255,255,255,.72)}
+  .trig-practice-grid{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+  .trig-level-card{position:relative;overflow:hidden;background:linear-gradient(180deg,#fff 0%,#fff9ef 100%)}
+  .trig-level-card::after{content:"";position:absolute;width:150px;height:150px;border:1px solid rgba(215,123,45,.12);border-radius:50%;right:-75px;top:-70px;pointer-events:none}
+  .trig-level-card.full{grid-column:1/-1}
+  .level-head{display:flex;gap:10px;align-items:flex-start;justify-content:space-between;margin-bottom:12px}
+  .level-badge{display:inline-flex;align-items:center;justify-content:center;padding:6px 10px;border-radius:999px;background:var(--primary-soft);color:var(--primary-dark);font-size:12px;font-weight:900;white-space:nowrap}
+  .level-head h3{margin:0;color:var(--accent)}
+  .trig-expression{margin:15px 0;padding:16px;border-radius:17px;background:#fff;border:1px solid var(--line);text-align:center;font-family:"Cambria Math","STIX Two Math","Times New Roman",serif;font-size:clamp(24px,3vw,34px);font-weight:700;color:#4b382c}
+  .trig-choice-grid{display:grid;grid-template-columns:1fr 1fr;gap:9px}
+  .trig-choice-grid .answer-btn{text-align:center;min-height:54px;font-size:18px;display:flex;align-items:center;justify-content:center}
+  .trig-choice-grid .answer-btn .frac{font-size:.9em}
+  .action-row{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-top:12px}
+  .action-row .trainer-feedback{flex:1;margin:0;min-width:180px}
+
+  .build-panel{display:grid;gap:12px}
+  .build-group{padding:12px;border:1px solid var(--line);border-radius:15px;background:#fffdf8}
+  .build-group-title{margin-bottom:8px;font-size:13px;font-weight:900;color:var(--muted)}
+  .build-options{display:flex;flex-wrap:wrap;gap:8px}
+  .build-btn{border:1px solid #e2cfb8;background:#fff;border-radius:12px;padding:9px 12px;min-height:43px;font-weight:900;color:#4e3d31;display:inline-flex;align-items:center;justify-content:center}
+  .build-btn:hover{background:#fff5e7}
+  .build-btn.selected{background:var(--primary-soft);border-color:#d99657;color:#914d1c;box-shadow:0 0 0 3px rgba(215,123,45,.08)}
+  .build-btn:disabled{opacity:.48;cursor:not-allowed}
+  .build-preview{display:flex;align-items:center;justify-content:center;gap:8px;min-height:58px;padding:10px;border-radius:15px;background:#fff4e3;border:1px dashed #dfb889;color:#70441f;font-weight:800}
+  .build-preview-value{font-family:"Cambria Math","STIX Two Math","Times New Roman",serif;font-size:25px;min-width:70px;text-align:center}
+
+  .summary-layout{display:grid;grid-template-columns:220px minmax(0,1fr);gap:20px;align-items:start}
+  .summary-circle{width:100%;aspect-ratio:1;border:1px solid var(--line);border-radius:20px;background:#fffdf8}
+  .summary-angle{text-align:center;margin-top:9px;font-family:"Cambria Math","STIX Two Math","Times New Roman",serif;font-size:22px;font-weight:800;color:#5d4635}
+  .summary-rows{display:grid;gap:9px}
+  .summary-row{display:grid;grid-template-columns:90px minmax(160px,1fr);gap:10px;align-items:center;padding:8px 10px;border-radius:14px;border:1px solid var(--line);background:#fff}
+  .summary-row.correct{background:var(--success-soft);border-color:#a8d8c3}
+  .summary-row.wrong{background:var(--danger-soft);border-color:#efc0c7}
+  .summary-fn{font-family:"Cambria Math","STIX Two Math","Times New Roman",serif;font-size:20px;font-weight:800;text-align:right;color:#4d3a2d}
+  .summary-select{width:100%;min-height:46px;border:1px solid #ddc5a8;border-radius:12px;background:#fffdf8;color:#4c3a2d;font-weight:900;display:flex;align-items:center;justify-content:center;gap:6px;padding:8px 10px}
+  .summary-select.active{border-color:#d77b2d;box-shadow:0 0 0 3px rgba(215,123,45,.09);background:#fff5e8}
+  .summary-select.locked{cursor:default;color:#0f714f;border-color:#a8d8c3;background:#f8fffb}
+  .summary-palette-wrap{margin-top:12px;padding:12px;border-radius:15px;background:#fff7eb;border:1px solid var(--line)}
+  .summary-palette-title{font-size:13px;font-weight:900;color:var(--muted);margin-bottom:8px}
+  .summary-palette{display:flex;flex-wrap:wrap;gap:8px}
+  .value-chip{border:1px solid #dfc9ad;background:#fff;border-radius:12px;padding:8px 11px;min-height:42px;min-width:54px;font-weight:900;color:#4c392d;display:inline-flex;align-items:center;justify-content:center}
+  .value-chip:hover{background:#fff1dd}
+  .undef{font-family:"Segoe UI",Inter,Arial,sans-serif;font-size:.92em;font-style:normal}
+
+  @media (max-width:900px){
+    .trig-practice-grid{grid-template-columns:1fr}
+    .trig-level-card.full{grid-column:auto}
+    .summary-layout{grid-template-columns:1fr}
+    .summary-circle{max-width:240px;margin:0 auto}
+  }
+  @media (max-width:560px){
+    .trig-choice-grid{grid-template-columns:1fr 1fr}
+    .summary-row{grid-template-columns:72px 1fr}
+    .summary-fn{font-size:18px}
+  }
+
+  .footer-note{
+    margin-top:30px;padding:22px;border-radius:22px;background:linear-gradient(180deg,#fffaf2 0%, #ffefd9 100%);
+    border:1px solid var(--line);text-align:center;color:#6e6258;line-height:1.6
+  }
+  .footer-note strong{color:var(--accent)}
+  .footer-note a{font-weight:800;text-decoration:none}
+
+  @media (max-width:1080px){
+    .cards{grid-template-columns:1fr 1fr}
+    .lesson-grid{grid-template-columns:1fr}
+    .trainers{grid-template-columns:1fr}
+    .hero{grid-template-columns:1fr}
+    .game-workbench{grid-template-columns:minmax(0,1fr) 250px}
+  }
+  @media (max-width:900px){
+    .game-workbench{grid-template-columns:1fr}
+    .bank-wrap{position:static;max-height:none}
+    .chip-bank{grid-template-columns:repeat(4,minmax(0,1fr))}
+  }
+  @media (max-width:720px){
+    .page{padding:14px 10px 34px}
+    .hero{padding:24px 20px;border-radius:22px}
+    .hero p{font-size:16px}
+    .section-header{flex-direction:column;align-items:flex-start}
+    .cards{grid-template-columns:1fr}
+    .mini-grid{grid-template-columns:1fr}
+    .game-workbench{grid-template-columns:1fr}
+    .bank-wrap{position:static;max-height:none}
+    .chip-bank{grid-template-columns:repeat(4,minmax(0,1fr))}
+    .toolbar{align-items:flex-start}
+    .drop-target{min-width:48px;min-height:34px;border-radius:11px;padding:2px 4px}
+    .drop-target::before{width:10px;height:10px;box-shadow:0 0 0 4px rgba(234,211,183,.42)}
+    .circle-shell.group-mode .target-cards{width:76px}
+    .circle-shell.group-mode .drop-target .angle-chip{width:76px;font-size:9.5px}
+    .angle-chip{padding:8px 9px;font-size:12px}
+    .chip-bank{grid-template-columns:1fr 1fr}
+  }
+</style>
+</head>
+<body>
+<div class="page">
+  <header class="hero">
+    <div>
+      <h1>Единичная тригонометрическая окружность</h1>
+      <p>Интерактивный урок для 10 класса: повторение теории, работа со стандартными углами, координатами точек вида <span class="math-block">M(cos α; sin α)</span>, а также задания на знаки тригонометрических функций по четвертям.</p>
+    </div>
+    <aside class="hero-side">
+      <h2>Что отрабатывает тренажёр</h2>
+      <ul>
+        <li>соответствие между углом и его положением на окружности;</li>
+        <li>связь угла с координатами точки на единичной окружности;</li>
+        <li>определение знаков <span class="math">cos α</span> и <span class="math">sin α</span> по четверти;</li>
+        <li>узнавание стандартных значений для углов <span class="math">0°, 30°, 45°, 60°, …, 330°</span>;</li>
+        <li>понимание того, что углы, отличающиеся на <span class="math">2πk</span>, соответствуют одной и той же точке окружности.</li>
+      </ul>
+    </aside>
+  </header>
+
+  <section class="section">
+    <div class="section-header">
+      <h2>1. Теоретическая опора</h2>
+      <p>Краткое повторение перед началом практической работы</p>
+    </div>
+    <div class="cards">
+      <article class="card theory-card">
+        <h3>Единичная окружность</h3>
+        <p>Единичной называется окружность радиуса 1 с центром в начале координат. Угол <span class="math">α</span> откладывается от положительного направления оси <span class="math">Ox</span> против часовой стрелки.</p>
+        <div class="formula"><span class="math-block">x<sup>2</sup> + y<sup>2</sup> = 1</span></div>
+      </article>
+      <article class="card theory-card">
+        <h3>Координаты точки</h3>
+        <p>Если точка <span class="math">M</span> на единичной окружности соответствует углу <span class="math">α</span>, то её абсцисса равна <span class="math">cos α</span>, а ордината равна <span class="math">sin α</span>.</p>
+        <div class="formula"><span class="math-block">M(cos α; sin α)</span></div>
+      </article>
+      <article class="card theory-card">
+        <h3>Радианная мера</h3>
+        <p>Полный оборот равен <span class="math">2π</span> радиан, полуоборот — <span class="math">π</span> радиан, а четверть оборота — <span class="math"><span class="frac"><span class="top">π</span><span class="bottom">2</span></span></span> радиан.</p>
+        <div class="formula"><span class="math-block">α(рад) = α(°) · <span class="frac"><span class="top">π</span><span class="bottom">180</span></span></span></div>
+      </article>
+      <article class="card theory-card">
+        <h3>Знаки по четвертям</h3>
+        <p>Так как <span class="math">cos α</span> — это абсцисса, его знак определяется расположением точки относительно оси <span class="math">Oy</span>. Аналогично знак <span class="math">sin α</span> определяется расположением относительно оси <span class="math">Ox</span>.</p>
+        <div class="formula"><div class="sign-grid math-block"><span>I: (+,+)</span><span>II: (−,+)</span><span>III: (−,−)</span><span>IV: (+,−)</span></div></div>
+      </article>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="section-header">
+      <h2>2. Основной тренажёр</h2>
+      <p>Расставьте карточки с углами на отмеченные положения единичной окружности</p>
+    </div>
+    <div class="lesson-grid">
+      <article class="card game-card">
+        <div class="toolbar">
+          <div class="toolbar-left">
+            <span class="control-label">Режим задания:</span>
+            <select id="taskMode" aria-label="Режим задания">
+              <option value="standard">Стандартный набор</option>
+              <option value="samePoint">Одна точка — разные углы</option>
+            </select>
+            <span class="control-label">Подписи на карточках:</span>
+            <select id="labelMode" aria-label="Режим подписей">
+              <option value="rad">Радианы</option>
+              <option value="deg">Градусы</option>
+              <option value="mixed">Смешанный режим</option>
+            </select>
+            <span class="control-label">Количество карточек:</span>
+            <select id="setSize" aria-label="Количество карточек в наборе">
+              <option value="6">6</option>
+              <option value="8" selected>8</option>
+              <option value="10">10</option>
+              <option value="12">12</option>
+            </select>
+          </div>
+          <div class="toolbar-right">
+            <button class="btn ghost" id="hintBtn">Показать подсказки</button>
+            <button class="btn ghost" id="resetBtn">Сбросить</button>
+            <button class="btn soft" id="newBtn">Новый набор</button>
+            <button class="btn primary" id="checkBtn">Проверить</button>
+            <span class="check-status" id="checkStatus" aria-live="polite"></span>
+          </div>
+        </div>
+        <div class="mode-note" id="modeNote">В стандартном режиме каждой карточке соответствует одно отмеченное положение на окружности.</div>
+
+        <div class="game-workbench">
+          <div class="circle-panel">
+            <div class="circle-shell" id="circleShell">
+            <svg viewBox="0 0 600 600" role="img" aria-label="Единичная тригонометрическая окружность со стандартными положениями точек">
+              <line class="axis" x1="42" y1="300" x2="558" y2="300" />
+              <line class="axis" x1="300" y1="558" x2="300" y2="42" />
+              <polygon points="558,300 546,294 546,306" fill="#9d9287" />
+              <polygon points="300,42 294,54 306,54" fill="#9d9287" />
+              <circle class="circle" cx="300" cy="300" r="220" />
+              <text class="axis-label" x="560" y="290">x</text>
+              <text class="axis-label" x="310" y="48">y</text>
+              <text class="origin-label" x="309" y="321">O</text>
+              <text class="unit-label" x="520" y="320">1</text>
+              <text class="unit-label" x="66" y="320">−1</text>
+              <text class="unit-label" x="316" y="79">1</text>
+              <text class="unit-label" x="311" y="540">−1</text>
+              <text class="quadrant" x="405" y="188">I</text>
+              <text class="quadrant" x="179" y="188">II</text>
+              <text class="quadrant" x="175" y="430">III</text>
+              <text class="quadrant" x="408" y="430">IV</text>
+              <g id="ticks"></g>
+              <g id="rays"></g>
+              <g id="hintLabels"></g>
+            </svg>
+              <div class="hint-layer" id="hintLayer"></div>
+              <div class="drop-layer" id="dropLayer"></div>
+            </div>
+            <div class="legend">
+            <div class="legend-item"><span class="legend-mark"></span><span>свободное место для карточки;</span></div>
+            <div class="legend-item"><span class="legend-mark ok"></span><span>ответ указан верно;</span></div>
+            <div class="legend-item"><span class="legend-mark bad"></span><span>после проверки неверная карточка вернётся в банк.</span></div>
+            </div>
+          </div>
+
+          <aside class="bank-wrap">
+          <div class="bank-head">
+            <div>
+              <div class="bank-title">Карточки с углами</div>
+              <div class="bank-sub" id="bankSub">На окружности отмечены все стандартные положения. На карточках могут встречаться отрицательные углы и углы больше 2π. Сравнивайте их с углами, отличающимися на целое число полных оборотов.</div>
+            </div>
+            <div class="small" id="placedCounter">0 из 8 карточек размещено</div>
+          </div>
+          <div class="chip-bank" id="chipBank"></div>
+          </aside>
+        </div>
+        <div class="message" id="gameMessage">Сначала удобно расставить опорные углы <span class="math-block">0, <span class="frac"><span class="top">π</span><span class="bottom">2</span></span>, π, <span class="frac"><span class="top">3π</span><span class="bottom">2</span></span></span>, а затем использовать симметрию.</div>
+      </article>
+
+      <aside class="card side-card">
+        <h3>Инструкция к работе</h3>
+        <ol class="steps">
+          <li>Выберите режим задания: «Стандартный набор» или «Одна точка — разные углы».</li>
+          <li>Выберите вид записи углов: радианы, градусы или смешанный вариант.</li>
+          <li>Перетащите карточки к соответствующим отмеченным точкам окружности. Во втором режиме одна точка может принять несколько карточек.</li>
+          <li>Нажмите кнопку «Проверить».</li>
+          <li>Верные ответы будут зафиксированы, а неверные автоматически вернутся в банк карточек.</li>
+        </ol>
+        <div class="fact"><strong>Важно.</strong> На окружности специально отмечены <em>все</em> стандартные положения точек. Поэтому часть мест останется пустой. Помните: углы <span class="math">α</span> и <span class="math">α + 2πk</span>, где <span class="math">k ∈ ℤ</span>, соответствуют одной и той же точке единичной окружности.</div>
+        <div class="tip-box"><strong>Полезный ориентир.</strong> Если точка соответствует углу <span class="math-block">α</span>, то её координаты равны <span class="math-block">(cos α; sin α)</span>. Следовательно, зная положение точки по четвертям, можно быстро определить, какому стандартному положению соответствует угол.</div>
+        <div class="progress-row"><span>Процент верно размещённых карточек</span><span id="progressText">0%</span></div>
+        <div class="progress"><div id="progressBar"></div></div>
+        <div class="stats">
+          <div class="stat-box"><strong id="firstTryScore">0</strong><span>верно при первой проверке</span></div>
+          <div class="stat-box"><strong id="streak">0</strong><span>наборов выполнено полностью</span></div>
+        </div>
+      </aside>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="section-header">
+      <h2>3. Дополнительные задания</h2>
+      <p>Закрепление координат, углов и знаков тригонометрических функций</p>
+    </div>
+    <div class="trainers">
+      <article class="card trainer-card">
+        <h3>Задание 1. Координаты точки</h3>
+        <p>Определите координаты точки <span class="math-block">M(cos α; sin α)</span> для выделенного угла.</p>
+        <div class="mini-grid">
+          <svg class="mini-circle" id="coordSvg" viewBox="0 0 300 300" aria-label="Мини-окружность для задания на координаты">
+            <line x1="24" y1="150" x2="276" y2="150" stroke="#aaa095" stroke-width="1.4"/>
+            <line x1="150" y1="276" x2="150" y2="24" stroke="#aaa095" stroke-width="1.4"/>
+            <circle cx="150" cy="150" r="105" fill="none" stroke="#b76528" stroke-width="2.5"/>
+            <line id="coordRay" x1="150" y1="150" x2="255" y2="150" stroke="#7a5539" stroke-width="3"/>
+            <circle id="coordPoint" cx="255" cy="150" r="6" fill="#d77b2d"/>
+          </svg>
+          <div>
+            <div class="question" id="coordQuestion"></div>
+            <div class="answers" id="coordAnswers"></div>
+            <div class="trainer-feedback" id="coordFeedback"></div>
+            <button class="btn soft" id="nextCoord">Следующий вопрос</button>
+          </div>
+        </div>
+      </article>
+
+      <article class="card trainer-card">
+        <h3>Задание 2. Угол по координатам</h3>
+        <p>По заданным координатам точки определите соответствующий угол.</p>
+        <div>
+          <div class="question" id="angleQuestion"></div>
+          <div class="answers" id="angleAnswers"></div>
+          <div class="trainer-feedback" id="angleFeedback"></div>
+          <button class="btn soft" id="nextAngle">Следующий вопрос</button>
+        </div>
+      </article>
+
+      <article class="card trainer-card">
+        <h3>Задание 3. Знаки <span class="math">sin α</span> и <span class="math">cos α</span></h3>
+        <p>Определите знаки абсциссы и ординаты точки, соответствующей данному углу.</p>
+        <div class="quad-board">
+          <div class="quad-cell"><strong>I</strong><span><span class="math">cos α &gt; 0</span>, <span class="math">sin α &gt; 0</span></span></div>
+          <div class="quad-cell"><strong>II</strong><span><span class="math">cos α &lt; 0</span>, <span class="math">sin α &gt; 0</span></span></div>
+          <div class="quad-cell"><strong>III</strong><span><span class="math">cos α &lt; 0</span>, <span class="math">sin α &lt; 0</span></span></div>
+          <div class="quad-cell"><strong>IV</strong><span><span class="math">cos α &gt; 0</span>, <span class="math">sin α &lt; 0</span></span></div>
+        </div>
+        <div class="question" id="signQuestion"></div>
+        <div class="answers" id="signAnswers"></div>
+        <div class="trainer-feedback" id="signFeedback"></div>
+        <button class="btn soft" id="nextSign">Следующий вопрос</button>
+      </article>
+    </div>
+  </section>
+
+
+  <section class="section" id="trigValuesSection">
+    <div class="section-header">
+      <h2>4. Табличные значения тригонометрических функций</h2>
+      <p>Точные значения для стандартных углов единичной окружности</p>
+    </div>
+
+    <div class="trig-theory-strip">
+      <div class="formula-piece"><span class="math">tg α =</span> <span class="frac"><span class="top">sin α</span><span class="bottom">cos α</span></span>, <span class="math">cos α ≠ 0</span></div>
+      <div class="formula-piece"><span class="math">ctg α =</span> <span class="frac"><span class="top">cos α</span><span class="bottom">sin α</span></span>, <span class="math">sin α ≠ 0</span></div>
+      <div class="small">Ответы выбираются и собираются из математических элементов — вводить корни и дроби с клавиатуры не требуется.</div>
+    </div>
+
+    <div class="trig-practice-grid">
+      <article class="card trig-level-card">
+        <div class="level-head">
+          <div>
+            <h3>Выберите точное значение</h3>
+            <p>Определите значение функции для указанного стандартного угла.</p>
+          </div>
+          <span class="level-badge">Уровень 1</span>
+        </div>
+        <div class="trig-expression" id="trigChoiceQuestion"></div>
+        <div class="trig-choice-grid" id="trigChoiceAnswers"></div>
+        <div class="action-row">
+          <div class="trainer-feedback" id="trigChoiceFeedback"></div>
+          <button class="btn soft" id="nextTrigChoice">Следующий вопрос</button>
+        </div>
+      </article>
+
+      <article class="card trig-level-card">
+        <div class="level-head">
+          <div>
+            <h3>Соберите ответ</h3>
+            <p>Сначала определите знак или особый случай, затем выберите модуль значения.</p>
+          </div>
+          <span class="level-badge">Уровень 2</span>
+        </div>
+        <div class="trig-expression" id="trigBuildQuestion"></div>
+        <div class="build-panel">
+          <div class="build-group">
+            <div class="build-group-title">1. Знак или особый случай</div>
+            <div class="build-options" id="buildSignOptions">
+              <button class="build-btn" type="button" data-special="plus">+</button>
+              <button class="build-btn" type="button" data-special="minus">−</button>
+              <button class="build-btn" type="button" data-special="zero">0</button>
+              <button class="build-btn" type="button" data-special="undef">не определено</button>
+            </div>
+          </div>
+          <div class="build-group">
+            <div class="build-group-title">2. Модуль значения</div>
+            <div class="build-options" id="buildMagnitudeOptions"></div>
+          </div>
+          <div class="build-preview">Ваш ответ: <span class="build-preview-value" id="buildPreview">—</span></div>
+        </div>
+        <div class="action-row">
+          <button class="btn primary" id="checkTrigBuild">Проверить</button>
+          <button class="btn soft" id="nextTrigBuild">Новый пример</button>
+          <div class="trainer-feedback" id="trigBuildFeedback"></div>
+        </div>
+      </article>
+
+      <article class="card trig-level-card full">
+        <div class="level-head">
+          <div>
+            <h3>Все четыре функции одного угла</h3>
+            <p>Для одной точки окружности определите <span class="math">sin α</span>, <span class="math">cos α</span>, <span class="math">tg α</span> и <span class="math">ctg α</span>.</p>
+          </div>
+          <span class="level-badge">Уровень 3</span>
+        </div>
+        <div class="summary-layout">
+          <div>
+            <svg class="summary-circle" viewBox="0 0 260 260" aria-label="Точка на единичной окружности для задания на значения функций">
+              <line x1="22" y1="130" x2="238" y2="130" stroke="#aaa095" stroke-width="1.3"/>
+              <line x1="130" y1="238" x2="130" y2="22" stroke="#aaa095" stroke-width="1.3"/>
+              <circle cx="130" cy="130" r="88" fill="none" stroke="#b76528" stroke-width="2.5"/>
+              <line id="summaryRay" x1="130" y1="130" x2="218" y2="130" stroke="#7a5539" stroke-width="3"/>
+              <circle id="summaryPoint" cx="218" cy="130" r="6" fill="#d77b2d"/>
+            </svg>
+            <div class="summary-angle" id="summaryAngle"></div>
+          </div>
+          <div>
+            <div class="summary-rows" id="summaryRows">
+              <div class="summary-row" data-fn="sin"><div class="summary-fn">sin α =</div><button class="summary-select" type="button" data-fn="sin">выберите значение</button></div>
+              <div class="summary-row" data-fn="cos"><div class="summary-fn">cos α =</div><button class="summary-select" type="button" data-fn="cos">выберите значение</button></div>
+              <div class="summary-row" data-fn="tg"><div class="summary-fn">tg α =</div><button class="summary-select" type="button" data-fn="tg">выберите значение</button></div>
+              <div class="summary-row" data-fn="ctg"><div class="summary-fn">ctg α =</div><button class="summary-select" type="button" data-fn="ctg">выберите значение</button></div>
+            </div>
+            <div class="summary-palette-wrap">
+              <div class="summary-palette-title" id="summaryPaletteTitle">Выберите строку, которую хотите заполнить.</div>
+              <div class="summary-palette" id="summaryPalette"></div>
+            </div>
+            <div class="action-row">
+              <button class="btn primary" id="checkSummary">Проверить четыре значения</button>
+              <button class="btn soft" id="nextSummary">Новый угол</button>
+              <div class="trainer-feedback" id="summaryFeedback"></div>
+            </div>
+          </div>
+        </div>
+      </article>
+    </div>
+  </section>
+
+
+  <footer class="footer-note">
+    <strong>Светлана Быкова, «Шкатулка математических интерактивов».</strong><br>
+    Сайт проекта: <a href="https://shkatulka.sistema-math.ru" target="_blank" rel="noopener noreferrer">https://shkatulka.sistema-math.ru</a>
+  </footer>
+</div>
+
+<script>
+(() => {
+  const ANGLES = [
+    {deg:0,   rad:{n:'0'},         x:{n:'1'},               y:{n:'0'}},
+    {deg:30,  rad:{n:'π',d:'6'},   x:{sqrt:'3',d:'2'},      y:{n:'1',d:'2'}},
+    {deg:45,  rad:{n:'π',d:'4'},   x:{sqrt:'2',d:'2'},      y:{sqrt:'2',d:'2'}},
+    {deg:60,  rad:{n:'π',d:'3'},   x:{n:'1',d:'2'},         y:{sqrt:'3',d:'2'}},
+    {deg:90,  rad:{n:'π',d:'2'},   x:{n:'0'},               y:{n:'1'}},
+    {deg:120, rad:{n:'2π',d:'3'},  x:{sign:'−',n:'1',d:'2'},y:{sqrt:'3',d:'2'}},
+    {deg:135, rad:{n:'3π',d:'4'},  x:{sign:'−',sqrt:'2',d:'2'}, y:{sqrt:'2',d:'2'}},
+    {deg:150, rad:{n:'5π',d:'6'},  x:{sign:'−',sqrt:'3',d:'2'}, y:{n:'1',d:'2'}},
+    {deg:180, rad:{n:'π'},         x:{sign:'−',n:'1'},      y:{n:'0'}},
+    {deg:210, rad:{n:'7π',d:'6'},  x:{sign:'−',sqrt:'3',d:'2'}, y:{sign:'−',n:'1',d:'2'}},
+    {deg:225, rad:{n:'5π',d:'4'},  x:{sign:'−',sqrt:'2',d:'2'}, y:{sign:'−',sqrt:'2',d:'2'}},
+    {deg:240, rad:{n:'4π',d:'3'},  x:{sign:'−',n:'1',d:'2'}, y:{sign:'−',sqrt:'3',d:'2'}},
+    {deg:270, rad:{n:'3π',d:'2'},  x:{n:'0'},               y:{sign:'−',n:'1'}},
+    {deg:300, rad:{n:'5π',d:'3'},  x:{n:'1',d:'2'},         y:{sign:'−',sqrt:'3',d:'2'}},
+    {deg:315, rad:{n:'7π',d:'4'},  x:{sqrt:'2',d:'2'},      y:{sign:'−',sqrt:'2',d:'2'}},
+    {deg:330, rad:{n:'11π',d:'6'}, x:{sqrt:'3',d:'2'},      y:{sign:'−',n:'1',d:'2'}}
+  ];
+
+  const shell = document.getElementById('circleShell');
+  const dropLayer = document.getElementById('dropLayer');
+  const hintLayer = document.getElementById('hintLayer');
+  const chipBank = document.getElementById('chipBank');
+  const bankSub = document.getElementById('bankSub');
+  const checkBtn = document.getElementById('checkBtn');
+  const newBtn = document.getElementById('newBtn');
+  const resetBtn = document.getElementById('resetBtn');
+  const hintBtn = document.getElementById('hintBtn');
+  const taskMode = document.getElementById('taskMode');
+  const modeNote = document.getElementById('modeNote');
+  const labelMode = document.getElementById('labelMode');
+  const setSize = document.getElementById('setSize');
+  const gameMessage = document.getElementById('gameMessage');
+  const placedCounter = document.getElementById('placedCounter');
+  const progressText = document.getElementById('progressText');
+  const progressBar = document.getElementById('progressBar');
+  const firstTryScore = document.getElementById('firstTryScore');
+  const streakEl = document.getElementById('streak');
+  const checkStatus = document.getElementById('checkStatus');
+
+  const coordQuestion = document.getElementById('coordQuestion');
+  const coordAnswers = document.getElementById('coordAnswers');
+  const coordFeedback = document.getElementById('coordFeedback');
+  const coordRay = document.getElementById('coordRay');
+  const coordPoint = document.getElementById('coordPoint');
+  const nextCoord = document.getElementById('nextCoord');
+
+  const angleQuestion = document.getElementById('angleQuestion');
+  const angleAnswers = document.getElementById('angleAnswers');
+  const angleFeedback = document.getElementById('angleFeedback');
+  const nextAngle = document.getElementById('nextAngle');
+
+  const signQuestion = document.getElementById('signQuestion');
+  const signAnswers = document.getElementById('signAnswers');
+  const signFeedback = document.getElementById('signFeedback');
+  const nextSign = document.getElementById('nextSign');
+
+
+  const trigChoiceQuestion = document.getElementById('trigChoiceQuestion');
+  const trigChoiceAnswers = document.getElementById('trigChoiceAnswers');
+  const trigChoiceFeedback = document.getElementById('trigChoiceFeedback');
+  const nextTrigChoice = document.getElementById('nextTrigChoice');
+
+  const trigBuildQuestion = document.getElementById('trigBuildQuestion');
+  const buildSignOptions = document.getElementById('buildSignOptions');
+  const buildMagnitudeOptions = document.getElementById('buildMagnitudeOptions');
+  const buildPreview = document.getElementById('buildPreview');
+  const checkTrigBuild = document.getElementById('checkTrigBuild');
+  const nextTrigBuild = document.getElementById('nextTrigBuild');
+  const trigBuildFeedback = document.getElementById('trigBuildFeedback');
+
+  const summaryRay = document.getElementById('summaryRay');
+  const summaryPoint = document.getElementById('summaryPoint');
+  const summaryAngle = document.getElementById('summaryAngle');
+  const summaryRows = document.getElementById('summaryRows');
+  const summaryPaletteTitle = document.getElementById('summaryPaletteTitle');
+  const summaryPalette = document.getElementById('summaryPalette');
+  const checkSummary = document.getElementById('checkSummary');
+  const nextSummary = document.getElementById('nextSummary');
+  const summaryFeedback = document.getElementById('summaryFeedback');
+
+  let currentSet = [];
+  let alreadyChecked = false;
+  let streak = 0;
+  let coordCurrent = null;
+  let angleCurrent = null;
+  let signCurrent = null;
+  let checkStatusTimer = null;
+
+  function showCheckStatus(text, type=''){
+    if(!checkStatus) return;
+    checkStatus.textContent = text;
+    checkStatus.className = 'check-status' + (type ? ' ' + type : '');
+    clearTimeout(checkStatusTimer);
+    checkStatusTimer = setTimeout(() => {
+      checkStatus.textContent = '';
+      checkStatus.className = 'check-status';
+    }, 4200);
+  }
+
+  function shuffle(arr){
+    const a = [...arr];
+    for(let i=a.length-1;i>0;i--){
+      const j=Math.floor(Math.random()*(i+1));
+      [a[i],a[j]]=[a[j],a[i]];
+    }
+    return a;
+  }
+
+  function choice(arr){
+    return arr[Math.floor(Math.random()*arr.length)];
+  }
+
+  function gcd(a,b){
+    a = Math.abs(a); b = Math.abs(b);
+    while(b){
+      const t = a % b;
+      a = b;
+      b = t;
+    }
+    return a || 1;
+  }
+
+  // Точная радианная мера для любого целого числа градусов.
+  // Например: −30° = −π/6, 390° = 13π/6, 765° = 17π/4.
+  function radFromDegrees(deg){
+    if(deg === 0) return {n:'0'};
+    const g = gcd(deg, 180);
+    const numerator = deg / g;
+    const denominator = 180 / g;
+    const absNum = Math.abs(numerator);
+    const sign = numerator < 0 ? '−' : '';
+    const top = absNum === 1 ? `${sign}π` : `${sign}${absNum}π`;
+    return denominator === 1 ? {n:top} : {n:top, d:String(denominator)};
+  }
+
+  function makeCardVariant(base, displayDeg){
+    return {
+      ...base,
+      targetDeg: base.deg,
+      deg: displayDeg,
+      rad: radFromDegrees(displayDeg)
+    };
+  }
+
+  function valueToHtml(v){
+    const sign = v.sign || '';
+    if(v.d){
+      const top = v.sqrt ? `<span class="sqrt"><span class="radicand">${v.sqrt}</span></span>` : v.n;
+      return `${sign}<span class="frac"><span class="top">${top}</span><span class="bottom">${v.d}</span></span>`;
+    }
+    if(v.sqrt) return `${sign}<span class="sqrt"><span class="radicand">${v.sqrt}</span></span>`;
+    return `${sign}${v.n}`;
+  }
+
+  function valueSign(v){
+    if(v.n === '0') return '0';
+    return v.sign === '−' ? '−' : '+';
+  }
+
+  function radHtml(a){
+    if(!a.rad.d) return a.rad.n;
+    return `<span class="frac"><span class="top">${a.rad.n}</span><span class="bottom">${a.rad.d}</span></span>`;
+  }
+
+  function degHtml(a){
+    return `${a.deg}&deg;`;
+  }
+
+  function angleLabelHtml(a, index=0){
+    const mode = labelMode.value;
+    if(mode === 'rad') return radHtml(a);
+    if(mode === 'deg') return degHtml(a);
+    // В смешанном режиме отрицательные углы и углы больше полного оборота
+    // специально показываем в радианах, чтобы отрабатывалась именно радианная запись.
+    if(a.deg < 0 || a.deg > 360) return radHtml(a);
+    return index % 2 === 0 ? radHtml(a) : degHtml(a);
+  }
+
+  function angleLabelBoth(a){
+    return `${radHtml(a)}&nbsp; (${degHtml(a)})`;
+  }
+
+  function coordPairHtml(a){
+    return `<span class="coord-pair">(${valueToHtml(a.x)}; ${valueToHtml(a.y)})</span>`;
+  }
+
+
+
+  // ---- Точные табличные значения sin, cos, tg и ctg ----
+  const EXACT_VALUE_HTML = {
+    '-sqrt3':'−<span class="sqrt"><span class="radicand">3</span></span>',
+    '-1':'−1',
+    '-sqrt3/2':'−<span class="frac"><span class="top"><span class="sqrt"><span class="radicand">3</span></span></span><span class="bottom">2</span></span>',
+    '-sqrt2/2':'−<span class="frac"><span class="top"><span class="sqrt"><span class="radicand">2</span></span></span><span class="bottom">2</span></span>',
+    '-1/2':'−<span class="frac"><span class="top">1</span><span class="bottom">2</span></span>',
+    '-sqrt3/3':'−<span class="frac"><span class="top"><span class="sqrt"><span class="radicand">3</span></span></span><span class="bottom">3</span></span>',
+    '0':'0',
+    'sqrt3/3':'<span class="frac"><span class="top"><span class="sqrt"><span class="radicand">3</span></span></span><span class="bottom">3</span></span>',
+    '1/2':'<span class="frac"><span class="top">1</span><span class="bottom">2</span></span>',
+    'sqrt2/2':'<span class="frac"><span class="top"><span class="sqrt"><span class="radicand">2</span></span></span><span class="bottom">2</span></span>',
+    'sqrt3/2':'<span class="frac"><span class="top"><span class="sqrt"><span class="radicand">3</span></span></span><span class="bottom">2</span></span>',
+    '1':'1',
+    'sqrt3':'<span class="sqrt"><span class="radicand">3</span></span>',
+    'undef':'<span class="undef">не определено</span>'
+  };
+
+  const SIN_COS_POOL = ['-1','-sqrt3/2','-sqrt2/2','-1/2','0','1/2','sqrt2/2','sqrt3/2','1'];
+  const TG_CTG_POOL = ['-sqrt3','-1','-sqrt3/3','0','sqrt3/3','1','sqrt3','undef'];
+  const BUILD_MAGNITUDES = ['1','1/2','sqrt2/2','sqrt3/2','sqrt3','sqrt3/3'];
+  const FN_LABEL = {sin:'sin', cos:'cos', tg:'tg', ctg:'ctg'};
+
+  function valueObjectId(v){
+    if(v.n === '0') return '0';
+    const sign = v.sign === '−' ? '-' : '';
+    if(v.sqrt && v.d) return `${sign}sqrt${v.sqrt}/${v.d}`;
+    if(v.sqrt) return `${sign}sqrt${v.sqrt}`;
+    if(v.d) return `${sign}${v.n}/${v.d}`;
+    return `${sign}${v.n}`;
+  }
+
+  function trigValueId(angle, fn){
+    if(fn === 'sin') return valueObjectId(angle.y);
+    if(fn === 'cos') return valueObjectId(angle.x);
+    const d = ((angle.deg % 360) + 360) % 360;
+    if(fn === 'tg'){
+      const map = {0:'0',30:'sqrt3/3',45:'1',60:'sqrt3',90:'undef',120:'-sqrt3',135:'-1',150:'-sqrt3/3',180:'0',210:'sqrt3/3',225:'1',240:'sqrt3',270:'undef',300:'-sqrt3',315:'-1',330:'-sqrt3/3'};
+      return map[d];
+    }
+    const map = {0:'undef',30:'sqrt3',45:'1',60:'sqrt3/3',90:'0',120:'-sqrt3/3',135:'-1',150:'-sqrt3',180:'undef',210:'sqrt3',225:'1',240:'sqrt3/3',270:'0',300:'-sqrt3/3',315:'-1',330:'-sqrt3'};
+    return map[d];
+  }
+
+  function exactHtml(id){ return EXACT_VALUE_HTML[id] || id; }
+  function poolForFn(fn){ return (fn === 'sin' || fn === 'cos') ? SIN_COS_POOL : TG_CTG_POOL; }
+  function fnExpressionHtml(fn, angle){ return `<span class="math">${FN_LABEL[fn]} ${radHtml(angle)}</span>`; }
+  function randomTrigPair(){
+    if(Math.random() < .18){
+      const special = choice([
+        {fn:'tg', angle:ANGLES.find(a=>a.deg===90)},
+        {fn:'tg', angle:ANGLES.find(a=>a.deg===270)},
+        {fn:'ctg', angle:ANGLES.find(a=>a.deg===0)},
+        {fn:'ctg', angle:ANGLES.find(a=>a.deg===180)}
+      ]);
+      return special;
+    }
+    return {fn:choice(['sin','cos','tg','ctg']), angle:choice(ANGLES)};
+  }
+
+  function makePlausibleOptions(correct, fn, count=4){
+    const pool = poolForFn(fn);
+    return shuffle([correct, ...shuffle(pool.filter(x => x !== correct)).slice(0,count-1)]);
+  }
+
+
+  function buildTicksAndRays(){
+    const gTicks = document.getElementById('ticks');
+    const gRays = document.getElementById('rays');
+    gTicks.innerHTML='';
+    gRays.innerHTML='';
+
+    ANGLES.forEach(a => {
+      const t = a.deg * Math.PI / 180;
+      const x1 = 300 + 214 * Math.cos(t), y1 = 300 - 214 * Math.sin(t);
+      const x2 = 300 + 226 * Math.cos(t), y2 = 300 - 226 * Math.sin(t);
+      const tick = document.createElementNS('http://www.w3.org/2000/svg', 'line');
+      tick.setAttribute('x1', x1); tick.setAttribute('y1', y1);
+      tick.setAttribute('x2', x2); tick.setAttribute('y2', y2);
+      tick.setAttribute('class', 'tick');
+      gTicks.appendChild(tick);
+
+      const ray = document.createElementNS('http://www.w3.org/2000/svg', 'line');
+      ray.setAttribute('x1', 300); ray.setAttribute('y1', 300);
+      ray.setAttribute('x2', 300 + 220 * Math.cos(t));
+      ray.setAttribute('y2', 300 - 220 * Math.sin(t));
+      ray.setAttribute('class', 'ray');
+      gRays.appendChild(ray);
+    });
+  }
+
+  function buildHintLabels(){
+    hintLayer.innerHTML = '';
+    document.getElementById('hintLabels').innerHTML = '';
+    ANGLES.forEach((a, i) => {
+      const t = a.deg * Math.PI / 180;
+      const left = 50 + 43.2 * Math.cos(t);
+      const top = 50 - 43.2 * Math.sin(t);
+      const tag = document.createElement('div');
+      tag.className = 'hint-tag';
+      tag.style.left = left + '%';
+      tag.style.top = top + '%';
+      const mode = labelMode.value;
+      if(mode === 'rad') tag.innerHTML = radHtml(a);
+      else if(mode === 'deg') tag.innerHTML = degHtml(a);
+      else tag.innerHTML = i % 2 === 0 ? radHtml(a) : degHtml(a);
+      hintLayer.appendChild(tag);
+    });
+  }
+
+  function createTargets(){
+    dropLayer.innerHTML='';
+    const groupMode = taskMode.value === 'samePoint';
+    shell.classList.toggle('group-mode', groupMode);
+
+    ANGLES.forEach(a => {
+      const t = a.deg * Math.PI / 180;
+      const left = 50 + 36.67 * Math.cos(t);
+      const top = 50 - 36.67 * Math.sin(t);
+      const target = document.createElement('div');
+      target.className = 'drop-target';
+      target.dataset.angle = String(a.deg);
+      target.style.left = left + '%';
+      target.style.top = top + '%';
+      target.setAttribute('aria-label', `Место для углов, соответствующих точке ${a.deg} градусов`);
+
+      const stack = document.createElement('div');
+      stack.className = 'target-cards';
+      if(groupMode){
+        const offset = 28;
+        const dx = Math.round(Math.cos(t) * offset);
+        const dy = Math.round(-Math.sin(t) * offset);
+        stack.style.setProperty('--stack-x', `${dx}px`);
+        stack.style.setProperty('--stack-y', `${dy}px`);
+      }
+      target.appendChild(stack);
+      dropLayer.appendChild(target);
+    });
+  }
+
+  function clearStateClasses(){
+    dropLayer.querySelectorAll('.drop-target').forEach(t => t.classList.remove('wrong'));
+  }
+
+  function updateOccupiedClass(target){
+    target.classList.toggle('occupied', !!target.querySelector('.angle-chip'));
+  }
+
+  function makeChip(angle, index){
+    const chip = document.createElement('button');
+    chip.type = 'button';
+    chip.className = 'angle-chip';
+    chip.dataset.angle = String(angle.targetDeg ?? angle.deg);
+    chip.dataset.displayDeg = String(angle.deg);
+    chip.dataset.index = String(index);
+    chip.innerHTML = angleLabelHtml(angle, index);
+    enablePointerDrag(chip);
+    return chip;
+  }
+
+  function updatePlaced(){
+    const placed = dropLayer.querySelectorAll('.angle-chip').length;
+    const total = currentSet.length;
+    placedCounter.textContent = `${placed} из ${total} карточек размещено`;
+    const correct = dropLayer.querySelectorAll('.angle-chip.locked').length;
+    const percent = total ? Math.round(correct / total * 100) : 0;
+    progressText.textContent = percent + '%';
+    progressBar.style.width = percent + '%';
+    dropLayer.querySelectorAll('.drop-target').forEach(updateOccupiedClass);
+  }
+
+  function circularDistance(a,b){
+    const d = Math.abs(a-b) % 360;
+    return Math.min(d, 360-d);
+  }
+
+  function selectSeparatedAngles(count){
+    const candidates = shuffle(ANGLES);
+    const selected = [];
+    for(const candidate of candidates){
+      if(selected.every(a => circularDistance(a.deg, candidate.deg) >= 60)){
+        selected.push(candidate);
+        if(selected.length === count) break;
+      }
+    }
+    if(selected.length < count){
+      const rest = ANGLES.filter(a => !selected.includes(a));
+      selected.push(...shuffle(rest).slice(0, count-selected.length));
+    }
+    return selected;
+  }
+
+  function buildSamePointSet(n){
+    const groupCount = n <= 6 ? 2 : (n <= 8 ? 3 : 4);
+    const bases = selectSeparatedAngles(groupCount);
+    const counts = Array(groupCount).fill(Math.floor(n / groupCount));
+    for(let i=0;i<n % groupCount;i++) counts[i]++;
+
+    const cards = [];
+    bases.forEach((base, groupIndex) => {
+      // Внутри одной группы все карточки отличаются на целое число полных оборотов.
+      // Сдвиги подобраны так, чтобы в наборе были и отрицательные углы,
+      // и углы, превышающие один полный оборот.
+      const shiftPatterns = [
+        [0, -1, 2, 1, -2],
+        [-1, 0, 1, 2, -2],
+        [1, -1, 0, 2, -2],
+        [0, 1, -1, 2, -2]
+      ];
+      const shifts = shiftPatterns[groupIndex % shiftPatterns.length];
+      for(let j=0;j<counts[groupIndex];j++){
+        const shift = shifts[j % shifts.length];
+        cards.push(makeCardVariant(base, base.deg + 360 * shift));
+      }
+    });
+
+    // Страховка: в каждом наборе обязательно присутствуют оба типа записи.
+    if(!cards.some(a => a.deg < 0)){
+      const a = cards[0];
+      cards[0] = makeCardVariant(ANGLES.find(x => x.deg === a.targetDeg), a.targetDeg - 360);
+    }
+    if(!cards.some(a => a.deg > 360)){
+      const idx = cards.length - 1;
+      const a = cards[idx];
+      cards[idx] = makeCardVariant(ANGLES.find(x => x.deg === a.targetDeg), a.targetDeg + 720);
+    }
+    return cards;
+  }
+
+  function buildStandardSet(n){
+    const targets = shuffle(ANGLES).slice(0, n);
+    const special = shuffle(targets.map((_, i) => i));
+    const negativeIndex = special[0];
+    const overTurnIndex = special[1];
+
+    return targets.map((base, i) => {
+      let shift;
+      if(i === negativeIndex){
+        shift = choice([-1, -2]);
+      } else if(i === overTurnIndex){
+        shift = base.deg === 0 ? choice([2, 3]) : choice([1, 2]);
+      } else {
+        shift = choice([-1, 0, 0, 0, 1]);
+        if(base.deg === 0 && shift === 1) shift = 2;
+      }
+      return makeCardVariant(base, base.deg + 360 * shift);
+    });
+  }
+
+  function newSet(){
+    const n = Number(setSize.value);
+    const groupMode = taskMode.value === 'samePoint';
+    currentSet = groupMode ? buildSamePointSet(n) : buildStandardSet(n);
+
+    createTargets();
+    chipBank.innerHTML = '';
+    shuffle(currentSet).forEach((a, i) => chipBank.appendChild(makeChip(a, i)));
+    alreadyChecked = false;
+    firstTryScore.textContent = '0';
+    if(checkStatus){ checkStatus.textContent=''; checkStatus.className='check-status'; }
+
+    if(groupMode){
+      modeNote.innerHTML = 'В этом режиме <strong>несколько разных углов могут соответствовать одной и той же точке</strong>. Один отмеченный «кармашек» может принять несколько карточек.';
+      bankSub.innerHTML = 'Ищите карточки, которые отличаются на целое число полных оборотов. Несколько таких карточек можно поместить в одну и ту же точку окружности.';
+      gameMessage.className = 'message';
+      gameMessage.innerHTML = 'Некоторые карточки соответствуют одной и той же точке. Используйте правило <span class="math">α + 2πk</span>, где <span class="math">k ∈ ℤ</span>.';
+    } else {
+      modeNote.innerHTML = 'В стандартном режиме каждой карточке соответствует одно отмеченное положение на окружности.';
+      bankSub.innerHTML = 'На карточках могут встречаться отрицательные углы и углы больше <span class="math">2π</span>. Углы, отличающиеся на целое число полных оборотов, соответствуют одной и той же точке окружности.';
+      gameMessage.className = 'message';
+      gameMessage.innerHTML = 'Расставьте карточки по соответствующим точкам окружности. Помните: углы <span class="math">α</span> и <span class="math">α + 2πk</span>, где <span class="math">k ∈ ℤ</span>, соответствуют одной и той же точке.';
+    }
+    updatePlaced();
+  }
+
+  function resetSet(){
+    dropLayer.querySelectorAll('.angle-chip').forEach(chip => {
+      chip.classList.remove('locked');
+      chipBank.appendChild(chip);
+    });
+    dropLayer.querySelectorAll('.drop-target').forEach(t => {
+      t.classList.remove('correct','wrong','occupied');
+    });
+    alreadyChecked = false;
+    firstTryScore.textContent = '0';
+    if(checkStatus){ checkStatus.textContent=''; checkStatus.className='check-status'; }
+    gameMessage.className = 'message';
+    gameMessage.innerHTML = 'Все карточки возвращены в банк. Попробуйте выполнить задание ещё раз.';
+    updatePlaced();
+  }
+
+  function checkSet(){
+    const total = currentSet.length;
+    const placed = dropLayer.querySelectorAll('.angle-chip').length;
+
+    if(placed === 0){
+      gameMessage.className = 'message bad';
+      gameMessage.innerHTML = 'Сначала разместите на окружности хотя бы одну карточку, затем нажмите «Проверить».';
+      showCheckStatus('Пока нечего проверять', 'bad');
+      return;
+    }
+
+    let correct = 0;
+    const wrong = [];
+
+    dropLayer.querySelectorAll('.drop-target').forEach(target => {
+      target.classList.remove('wrong','correct');
+      const chips = [...target.querySelectorAll('.angle-chip')];
+      if(chips.length === 0) return;
+
+      let localWrong = 0;
+      chips.forEach(chip => {
+        if(chip.dataset.angle === target.dataset.angle){
+          correct++;
+          chip.classList.add('locked');
+        } else {
+          localWrong++;
+          wrong.push({target, chip});
+        }
+      });
+
+      if(localWrong > 0) target.classList.add('wrong');
+      else target.classList.add('correct');
+    });
+
+    if(!alreadyChecked) firstTryScore.textContent = String(correct);
+    alreadyChecked = true;
+    updatePlaced();
+
+    const unplaced = total - placed;
+
+    if(correct === total){
+      streak++;
+      streakEl.textContent = String(streak);
+      gameMessage.className = 'message good';
+      if(taskMode.value === 'samePoint'){
+        gameMessage.innerHTML = 'Отлично! Все карточки размещены верно. Вы увидели, что одной и той же точке единичной окружности могут соответствовать разные углы вида <span class="math">α + 2πk</span>.';
+      } else {
+        gameMessage.innerHTML = 'Отлично! Все карточки размещены верно. Можно перейти к новому набору.';
+      }
+      showCheckStatus(`Верно: ${correct} из ${total}`, 'good');
+      return;
+    }
+
+    if(wrong.length === 0){
+      gameMessage.className = 'message good';
+      gameMessage.innerHTML = `Все размещённые карточки стоят верно. Осталось разместить ${unplaced} ${unplaced === 1 ? 'карточку' : (unplaced >= 2 && unplaced <= 4 ? 'карточки' : 'карточек')}.`;
+      showCheckStatus(`Размещённые ответы верны · осталось ${unplaced}`, 'good');
+      return;
+    }
+
+    gameMessage.className = 'message bad';
+    gameMessage.innerHTML = `Верно размещено ${correct} из ${placed} проверенных карточек. Неверных: ${wrong.length}. Они сейчас вернутся в банк.`;
+    showCheckStatus(`Верно: ${correct} · исправить: ${wrong.length}`, 'bad');
+
+    setTimeout(() => {
+      const touchedTargets = new Set();
+      wrong.forEach(({target, chip}) => {
+        touchedTargets.add(target);
+        chip.classList.remove('locked');
+        chipBank.appendChild(chip);
+      });
+      touchedTargets.forEach(target => {
+        target.classList.remove('wrong');
+        if(target.querySelector('.angle-chip.locked')) target.classList.add('correct');
+        else target.classList.remove('correct');
+        updateOccupiedClass(target);
+      });
+      updatePlaced();
+    }, 750);
+  }
+
+  function enablePointerDrag(el){
+    el.addEventListener('pointerdown', e => {
+      if(el.classList.contains('locked')) return;
+      if(e.button !== undefined && e.button !== 0) return;
+      e.preventDefault();
+      clearStateClasses();
+
+      const origin = el.parentElement;
+      const rect = el.getBoundingClientRect();
+      const ghost = el.cloneNode(true);
+      ghost.classList.add('drag-ghost');
+      ghost.classList.remove('locked');
+      ghost.style.width = rect.width + 'px';
+      ghost.style.left = e.clientX + 'px';
+      ghost.style.top = e.clientY + 'px';
+      document.body.appendChild(ghost);
+      el.style.visibility = 'hidden';
+
+      const move = ev => {
+        ghost.style.left = ev.clientX + 'px';
+        ghost.style.top = ev.clientY + 'px';
+      };
+
+      const up = ev => {
+        window.removeEventListener('pointermove', move);
+        window.removeEventListener('pointerup', up);
+        const under = document.elementFromPoint(ev.clientX, ev.clientY);
+        const target = under ? under.closest('.drop-target') : null;
+        ghost.remove();
+        el.style.visibility = '';
+
+        const groupMode = taskMode.value === 'samePoint';
+        const originTarget = origin ? origin.closest('.drop-target') : null;
+        const canPlace = target && (groupMode || !target.querySelector('.angle-chip'));
+
+        if(canPlace){
+          target.classList.remove('correct','wrong');
+          const stack = target.querySelector('.target-cards');
+          stack.appendChild(el);
+          updateOccupiedClass(target);
+        } else {
+          origin.appendChild(el);
+        }
+        if(originTarget) updateOccupiedClass(originTarget);
+        updatePlaced();
+      };
+
+      window.addEventListener('pointermove', move, {passive:false});
+      window.addEventListener('pointerup', up, {once:true});
+    });
+  }
+
+  labelMode.addEventListener('change', () => {
+    document.querySelectorAll('.angle-chip').forEach((chip, i) => {
+      const base = ANGLES.find(a => String(a.deg) === chip.dataset.angle);
+      const displayDeg = Number(chip.dataset.displayDeg ?? base.deg);
+      const angle = makeCardVariant(base, displayDeg);
+      chip.innerHTML = angleLabelHtml(angle, Number(chip.dataset.index ?? i));
+    });
+    buildHintLabels();
+  });
+
+  taskMode.addEventListener('change', newSet);
+  setSize.addEventListener('change', newSet);
+  newBtn.addEventListener('click', newSet);
+  resetBtn.addEventListener('click', resetSet);
+  checkBtn.addEventListener('click', checkSet);
+  hintBtn.addEventListener('click', () => {
+    shell.classList.toggle('show-hints');
+    hintBtn.textContent = shell.classList.contains('show-hints') ? 'Скрыть подсказки' : 'Показать подсказки';
+  });
+
+  function newCoordQuestion(){
+    coordFeedback.textContent = '';
+    coordCurrent = choice(ANGLES);
+    coordQuestion.innerHTML = `Пусть <span class="math">α = ${radHtml(coordCurrent)}</span> (${degHtml(coordCurrent)}). Чему равны координаты точки <span class="math">M</span>?`;
+
+    const t = coordCurrent.deg * Math.PI / 180;
+    const x = 150 + 105 * Math.cos(t), y = 150 - 105 * Math.sin(t);
+    coordRay.setAttribute('x2', x);
+    coordRay.setAttribute('y2', y);
+    coordPoint.setAttribute('cx', x);
+    coordPoint.setAttribute('cy', y);
+
+    const distractors = shuffle(ANGLES.filter(a => a.deg !== coordCurrent.deg)).slice(0,3);
+    const options = shuffle([coordCurrent, ...distractors]);
+    coordAnswers.innerHTML = '';
+
+    options.forEach(a => {
+      const btn = document.createElement('button');
+      btn.type = 'button';
+      btn.className = 'answer-btn';
+      btn.innerHTML = coordPairHtml(a);
+      btn.dataset.deg = String(a.deg);
+      btn.addEventListener('click', () => {
+        coordAnswers.querySelectorAll('button').forEach(x => x.disabled = true);
+        if(a.deg === coordCurrent.deg){
+          btn.classList.add('correct');
+          coordFeedback.innerHTML = 'Верно: <span class="math">cos α</span> — первая координата, <span class="math">sin α</span> — вторая координата.';
+        } else {
+          btn.classList.add('wrong');
+          [...coordAnswers.children].find(x => x.dataset.deg === String(coordCurrent.deg))?.classList.add('correct');
+          coordFeedback.innerHTML = `Правильный ответ: ${coordPairHtml(coordCurrent)}.`;
+        }
+      });
+      coordAnswers.appendChild(btn);
+    });
+  }
+
+  function newAngleQuestion(){
+    angleFeedback.textContent = '';
+    angleCurrent = choice(ANGLES);
+    angleQuestion.innerHTML = `Точка <span class="math">M</span> имеет координаты ${coordPairHtml(angleCurrent)}. Какому углу соответствует эта точка?`;
+    const distractors = shuffle(ANGLES.filter(a => a.deg !== angleCurrent.deg)).slice(0,3);
+    const options = shuffle([angleCurrent, ...distractors]);
+    angleAnswers.innerHTML = '';
+
+    options.forEach(a => {
+      const btn = document.createElement('button');
+      btn.type = 'button';
+      btn.className = 'answer-btn';
+      btn.innerHTML = angleLabelBoth(a);
+      btn.dataset.deg = String(a.deg);
+      btn.addEventListener('click', () => {
+        angleAnswers.querySelectorAll('button').forEach(x => x.disabled = true);
+        if(a.deg === angleCurrent.deg){
+          btn.classList.add('correct');
+          angleFeedback.innerHTML = 'Верно. Координаты точки однозначно задают её положение на единичной окружности.';
+        } else {
+          btn.classList.add('wrong');
+          [...angleAnswers.children].find(x => x.dataset.deg === String(angleCurrent.deg))?.classList.add('correct');
+          angleFeedback.innerHTML = `Правильный ответ: ${angleLabelBoth(angleCurrent)}.`;
+        }
+      });
+      angleAnswers.appendChild(btn);
+    });
+  }
+
+  const SIGN_OPTIONS = [
+    {x:'+', y:'+', html:'<span class="math">cos α &gt; 0</span>, <span class="math">sin α &gt; 0</span>'},
+    {x:'−', y:'+', html:'<span class="math">cos α &lt; 0</span>, <span class="math">sin α &gt; 0</span>'},
+    {x:'−', y:'−', html:'<span class="math">cos α &lt; 0</span>, <span class="math">sin α &lt; 0</span>'},
+    {x:'+', y:'−', html:'<span class="math">cos α &gt; 0</span>, <span class="math">sin α &lt; 0</span>'}
+  ];
+
+  function quadrantOf(deg){
+    if(deg > 0 && deg < 90) return 'I';
+    if(deg > 90 && deg < 180) return 'II';
+    if(deg > 180 && deg < 270) return 'III';
+    if(deg > 270 && deg < 360) return 'IV';
+    return 'на оси';
+  }
+
+  function newSignQuestion(){
+    signFeedback.textContent = '';
+    const nonAxis = ANGLES.filter(a => ![0,90,180,270].includes(a.deg));
+    signCurrent = choice(nonAxis);
+    signQuestion.innerHTML = `Для угла <span class="math">α = ${radHtml(signCurrent)}</span> (${degHtml(signCurrent)}) определите знаки <span class="math">cos α</span> и <span class="math">sin α</span>.`;
+    signAnswers.innerHTML = '';
+    const sx = valueSign(signCurrent.x);
+    const sy = valueSign(signCurrent.y);
+
+    shuffle(SIGN_OPTIONS).forEach(opt => {
+      const btn = document.createElement('button');
+      btn.type = 'button';
+      btn.className = 'answer-btn';
+      btn.innerHTML = opt.html;
+      btn.addEventListener('click', () => {
+        signAnswers.querySelectorAll('button').forEach(x => x.disabled = true);
+        if(opt.x === sx && opt.y === sy){
+          btn.classList.add('correct');
+          signFeedback.innerHTML = `Верно. Конечная сторона угла лежит в ${quadrantOf(signCurrent.deg)} четверти.`;
+        } else {
+          btn.classList.add('wrong');
+          [...signAnswers.children].find(x => x.innerHTML === SIGN_OPTIONS.find(o => o.x === sx && o.y === sy).html)?.classList.add('correct');
+          signFeedback.innerHTML = `Правильный ответ определяется по ${quadrantOf(signCurrent.deg)} четверти.`;
+        }
+      });
+      signAnswers.appendChild(btn);
+    });
+  }
+
+
+
+  // ---- Уровень 1: выбор точного значения ----
+  let trigChoiceCurrent = null;
+  function newTrigChoiceQuestion(){
+    trigChoiceFeedback.textContent = '';
+    trigChoiceCurrent = randomTrigPair();
+    const {fn, angle} = trigChoiceCurrent;
+    const correct = trigValueId(angle, fn);
+    trigChoiceQuestion.innerHTML = `${fnExpressionHtml(fn, angle)} = ?`;
+    trigChoiceAnswers.innerHTML = '';
+    makePlausibleOptions(correct, fn).forEach(id => {
+      const btn = document.createElement('button');
+      btn.type = 'button';
+      btn.className = 'answer-btn';
+      btn.innerHTML = exactHtml(id);
+      btn.dataset.value = id;
+      btn.addEventListener('click', () => {
+        trigChoiceAnswers.querySelectorAll('button').forEach(b => b.disabled = true);
+        if(id === correct){
+          btn.classList.add('correct');
+          trigChoiceFeedback.innerHTML = 'Верно.';
+        } else {
+          btn.classList.add('wrong');
+          [...trigChoiceAnswers.children].find(b => b.dataset.value === correct)?.classList.add('correct');
+          trigChoiceFeedback.innerHTML = `Правильное значение: ${exactHtml(correct)}.`;
+        }
+      });
+      trigChoiceAnswers.appendChild(btn);
+    });
+  }
+
+  // ---- Уровень 2: сборка ответа ----
+  let trigBuildCurrent = null;
+  let buildSpecial = null;
+  let buildMagnitude = null;
+
+  function renderBuildMagnitudes(){
+    buildMagnitudeOptions.innerHTML = '';
+    BUILD_MAGNITUDES.forEach(id => {
+      const btn = document.createElement('button');
+      btn.type = 'button';
+      btn.className = 'build-btn' + (buildMagnitude === id ? ' selected' : '');
+      btn.dataset.magnitude = id;
+      btn.innerHTML = exactHtml(id);
+      btn.disabled = buildSpecial === 'zero' || buildSpecial === 'undef' || !buildSpecial;
+      btn.addEventListener('click', () => {
+        buildMagnitude = id;
+        renderBuildMagnitudes();
+        updateBuildPreview();
+      });
+      buildMagnitudeOptions.appendChild(btn);
+    });
+  }
+
+  function selectedBuildValueId(){
+    if(buildSpecial === 'zero') return '0';
+    if(buildSpecial === 'undef') return 'undef';
+    if(!buildSpecial || !buildMagnitude) return null;
+    return buildSpecial === 'minus' ? `-${buildMagnitude}` : buildMagnitude;
+  }
+
+  function updateBuildPreview(){
+    const id = selectedBuildValueId();
+    buildPreview.innerHTML = id ? exactHtml(id) : '—';
+  }
+
+  function resetBuildSelection(){
+    buildSpecial = null;
+    buildMagnitude = null;
+    buildSignOptions.querySelectorAll('.build-btn').forEach(b => b.classList.remove('selected'));
+    renderBuildMagnitudes();
+    updateBuildPreview();
+  }
+
+  function newTrigBuildQuestion(){
+    trigBuildFeedback.textContent = '';
+    trigBuildCurrent = randomTrigPair();
+    trigBuildQuestion.innerHTML = `${fnExpressionHtml(trigBuildCurrent.fn, trigBuildCurrent.angle)} = ?`;
+    resetBuildSelection();
+  }
+
+  buildSignOptions.querySelectorAll('.build-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      buildSpecial = btn.dataset.special;
+      if(buildSpecial === 'zero' || buildSpecial === 'undef') buildMagnitude = null;
+      buildSignOptions.querySelectorAll('.build-btn').forEach(b => b.classList.toggle('selected', b === btn));
+      renderBuildMagnitudes();
+      updateBuildPreview();
+      trigBuildFeedback.textContent = '';
+    });
+  });
+
+  checkTrigBuild.addEventListener('click', () => {
+    const selected = selectedBuildValueId();
+    if(!selected){
+      trigBuildFeedback.textContent = 'Соберите ответ полностью: выберите знак и модуль значения.';
+      return;
+    }
+    const correct = trigValueId(trigBuildCurrent.angle, trigBuildCurrent.fn);
+    if(selected === correct){
+      trigBuildFeedback.innerHTML = 'Верно. Ответ собран правильно.';
+    } else {
+      trigBuildFeedback.innerHTML = `Пока неверно. Правильное значение: ${exactHtml(correct)}.`;
+    }
+  });
+
+  // ---- Уровень 3: четыре функции одного угла ----
+  let summaryCurrent = null;
+  let summaryActiveFn = null;
+  let summarySelections = {sin:null,cos:null,tg:null,ctg:null};
+  const summaryLocked = new Set();
+
+  function updateSummaryCircle(angle){
+    const t = angle.deg * Math.PI / 180;
+    const x = 130 + 88 * Math.cos(t), y = 130 - 88 * Math.sin(t);
+    summaryRay.setAttribute('x2', x); summaryRay.setAttribute('y2', y);
+    summaryPoint.setAttribute('cx', x); summaryPoint.setAttribute('cy', y);
+    summaryAngle.innerHTML = `α = ${radHtml(angle)} &nbsp; (${degHtml(angle)})`;
+  }
+
+  function renderSummaryRows(){
+    summaryRows.querySelectorAll('.summary-row').forEach(row => {
+      const fn = row.dataset.fn;
+      const btn = row.querySelector('.summary-select');
+      const value = summarySelections[fn];
+      btn.innerHTML = value ? exactHtml(value) : 'выберите значение';
+      btn.classList.toggle('active', summaryActiveFn === fn && !summaryLocked.has(fn));
+      btn.classList.toggle('locked', summaryLocked.has(fn));
+      btn.disabled = summaryLocked.has(fn);
+    });
+  }
+
+  function renderSummaryPalette(){
+    summaryPalette.innerHTML = '';
+    if(!summaryActiveFn){
+      summaryPaletteTitle.textContent = 'Выберите строку, которую хотите заполнить.';
+      return;
+    }
+    summaryPaletteTitle.innerHTML = `Выберите значение для <span class="math">${FN_LABEL[summaryActiveFn]} α</span>.`;
+    poolForFn(summaryActiveFn).forEach(id => {
+      const btn = document.createElement('button');
+      btn.type = 'button';
+      btn.className = 'value-chip';
+      btn.innerHTML = exactHtml(id);
+      btn.addEventListener('click', () => {
+        summarySelections[summaryActiveFn] = id;
+        const row = summaryRows.querySelector(`.summary-row[data-fn="${summaryActiveFn}"]`);
+        row.classList.remove('wrong');
+        renderSummaryRows();
+      });
+      summaryPalette.appendChild(btn);
+    });
+  }
+
+  summaryRows.querySelectorAll('.summary-select').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const fn = btn.dataset.fn;
+      if(summaryLocked.has(fn)) return;
+      summaryActiveFn = fn;
+      renderSummaryRows();
+      renderSummaryPalette();
+    });
+  });
+
+  function newSummaryQuestion(){
+    summaryCurrent = choice(ANGLES);
+    summarySelections = {sin:null,cos:null,tg:null,ctg:null};
+    summaryLocked.clear();
+    summaryActiveFn = null;
+    summaryFeedback.textContent = '';
+    summaryRows.querySelectorAll('.summary-row').forEach(r => r.classList.remove('correct','wrong'));
+    updateSummaryCircle(summaryCurrent);
+    renderSummaryRows();
+    renderSummaryPalette();
+  }
+
+  checkSummary.addEventListener('click', () => {
+    const fns = ['sin','cos','tg','ctg'];
+    const missing = fns.filter(fn => !summarySelections[fn]);
+    if(missing.length){
+      summaryFeedback.textContent = `Заполните все четыре строки. Осталось: ${missing.length}.`;
+      return;
+    }
+    let correctCount = 0;
+    fns.forEach(fn => {
+      const row = summaryRows.querySelector(`.summary-row[data-fn="${fn}"]`);
+      const correct = trigValueId(summaryCurrent, fn);
+      row.classList.remove('correct','wrong');
+      if(summarySelections[fn] === correct){
+        correctCount++;
+        summaryLocked.add(fn);
+        row.classList.add('correct');
+      } else {
+        row.classList.add('wrong');
+      }
+    });
+    renderSummaryRows();
+    if(correctCount === 4){
+      summaryFeedback.innerHTML = 'Все четыре значения найдены верно.';
+      summaryActiveFn = null;
+      renderSummaryPalette();
+    } else {
+      summaryFeedback.innerHTML = `Верно: ${correctCount} из 4. Исправьте строки, выделенные красным.`;
+    }
+  });
+
+  nextTrigChoice.addEventListener('click', newTrigChoiceQuestion);
+  nextTrigBuild.addEventListener('click', newTrigBuildQuestion);
+  nextSummary.addEventListener('click', newSummaryQuestion);
+
+
+  buildTicksAndRays();
+  buildHintLabels();
+  newSet();
+  newCoordQuestion();
+  newAngleQuestion();
+  newSignQuestion();
+  newTrigChoiceQuestion();
+  newTrigBuildQuestion();
+  newSummaryQuestion();
+
+  nextCoord.addEventListener('click', newCoordQuestion);
+  nextAngle.addEventListener('click', newAngleQuestion);
+  nextSign.addEventListener('click', newSignQuestion);
+})();
+</script>
+</body>
+</html>
