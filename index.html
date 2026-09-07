@@ -276,6 +276,23 @@
     .step-line { display: flex; justify-content: space-between; gap: 18px; color: var(--terracotta); font-size: 12px; text-transform: uppercase; letter-spacing: .13em; font-weight: 700; }
     .video-body h3 { margin: 15px 0 10px; font-size: 37px; line-height: 1.05; }
     .video-body p { color: var(--muted); line-height: 1.65; margin: 0; }
+    .video-actions {
+      display: flex; flex-wrap: wrap; gap: 10px; margin-top: 22px;
+    }
+    .asset-btn {
+      display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+      min-height: 44px; padding: 11px 16px; border-radius: 14px; text-decoration: none;
+      font-size: 12px; font-weight: 700; letter-spacing: .01em; transition: .2s ease;
+      border: 1px solid transparent;
+    }
+    .asset-btn.primary {
+      background: linear-gradient(135deg, var(--terracotta), #c98262); color: #fff;
+      box-shadow: 0 10px 22px rgba(169, 95, 70, .18);
+    }
+    .asset-btn.secondary {
+      background: #fffaf6; color: var(--terracotta); border-color: rgba(169, 95, 70, .22);
+    }
+    .asset-btn:hover { transform: translateY(-1px); }
 
     .editorial-card {
       display: grid; grid-template-columns: .8fr 1.2fr; overflow: hidden; border-radius: var(--radius-xl);
@@ -498,8 +515,8 @@
         </a>
         <nav class="nav" aria-label="Навигация">
           <a href="#lessons">Видеоуроки</a>
-          <a href="#workbook">Рабочая тетрадь</a>
-          <a href="#portfolio">Примеры</a>
+          <a href="#netlify">Netlify</a>
+          <a href="#portfolio">Промпты и примеры</a>
           <button class="logout" id="logoutBtn" type="button">Выйти</button>
         </nav>
       </div>
@@ -561,13 +578,13 @@
             </div>
             <span class="quick-arrow">›</span>
           </a>
-          <a href="#workbook" class="quick-card">
+          <a href="#portfolio" class="quick-card">
             <div class="quick-icon">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/><path d="M8 13h8"/><path d="M8 17h6"/></svg>
             </div>
             <div>
-              <h3>Рабочая тетрадь</h3>
-              <p>ВПР 7 класс, задание 1</p>
+              <h3>Промпты + примеры</h3>
+              <p>Готовые материалы и запросы</p>
             </div>
             <span class="quick-arrow">›</span>
           </a>
@@ -596,6 +613,9 @@
                 <div class="step-line"><span>Видеоурок 01</span><span>Создание</span></div>
                 <h3>Создаём интерактивный тренажёр</h3>
                 <p>Пошагово создаём HTML-тренажёр: задания, проверка ответов, подсказки, логика переходов и готовый код, который можно сразу открыть в браузере.</p>
+                <div class="video-actions">
+                  <a class="asset-btn primary" href="trainer.html" download>↓ Скачать тренажёр (HTML)</a>
+                </div>
               </div>
             </article>
 
@@ -610,46 +630,12 @@
                 <div class="step-line"><span>Видеоурок 02</span><span>Публикация + тетрадь</span></div>
                 <h3>Netlify и рабочая тетрадь</h3>
                 <p>Размещаем тренажёр на Netlify и создаём рабочую тетрадь без теории: только перечень заданий ВПР 7 класса, задание 1, в удобном формате для работы.</p>
+                <div class="video-actions">
+                  <a class="asset-btn primary" href="https://your-site-name.netlify.app/" target="_blank" rel="noopener">↗ Открыть тренажёр онлайн</a>
+                  <a class="asset-btn secondary" href="тетрадь.pdf" download>↓ Скачать рабочую тетрадь</a>
+                </div>
               </div>
             </article>
-          </div>
-        </div>
-      </section>
-
-      <section id="workbook">
-        <div class="container">
-          <div class="section-title">
-            <div>
-              <p class="eyebrow">Модуль 02</p>
-              <h2>Рабочая тетрадь: ВПР 7, задание 1</h2>
-            </div>
-            <p>Шаблон промпта для тетради без теории — только тренировка и аккуратная подача заданий.</p>
-          </div>
-
-          <div class="editorial-card">
-            <div class="editorial-intro">
-              <div class="big-number">02</div>
-              <h3>Создаём тетрадь без теории</h3>
-            </div>
-            <div class="editorial-content">
-              <p>Этот промпт можно использовать как основу, если вы хотите быстро собрать тренировочную рабочую тетрадь с перечнем заданий, без длинных объяснений.</p>
-              <div class="prompt-box">
-                <pre id="prompt-workbook">Я учитель математики. Создай рабочую тетрадь по ВПР для 7 класса, задание 1.
-
-Требования:
-— тетрадь должна быть без теоретического блока;
-— не нужно давать длинные объяснения и разборы;
-— основной формат: перечень заданий для тренировки;
-— задания нужно расположить от более простых к более сложным;
-— оформи материал аккуратно, современно и удобно для печати;
-— оставь место для записи ответов или краткого решения;
-— можно разделить задания на небольшие тематические блоки;
-— в конце отдельно дай ответы для учителя.
-
-Сначала предложи структуру тетради. После утверждения создай полный материал.</pre>
-                <button class="copy-btn" data-copy="prompt-workbook" type="button">Скопировать промпт</button>
-              </div>
-            </div>
           </div>
         </div>
       </section>
@@ -666,7 +652,7 @@
 
           <div class="editorial-card">
             <div class="editorial-intro">
-              <div class="big-number">03</div>
+              <div class="big-number">↗</div>
               <h3>Из файла — в ссылку</h3>
             </div>
             <div class="editorial-content">
@@ -683,10 +669,10 @@
         <div class="container">
           <div class="section-title">
             <div>
-              <p class="eyebrow">Моя библиотека</p>
-              <h2>Примеры работ + промпты</h2>
+              <p class="eyebrow">Модуль 02</p>
+              <h2>Промпты и примеры работ</h2>
             </div>
-            <p>Позже просто загрузите изображения своих материалов с именами <strong>work-1.jpg</strong>, <strong>work-2.jpg</strong>, <strong>work-3.jpg</strong>.</p>
+            <p>Здесь собраны готовые примеры материалов и промпты, которые можно скопировать и адаптировать под свой предмет, класс и тему.</p>
           </div>
 
           <div class="works">
