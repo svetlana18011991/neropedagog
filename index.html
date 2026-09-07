@@ -816,8 +816,8 @@
   </div>
 
   <script>
-    // SHA-256 для пароля «нейропедагог»
-    const PASSWORD_HASH = "a69c348737543a940a07702f678eebc8710e0b2ccb2631c642abafe2afae9632";
+    // Пароль проверяем без Web Crypto, чтобы вход работал даже при открытии сайта по HTTP.
+    const ACCESS_PASSWORD = "нейропедагог";
 
     const form = document.getElementById('loginForm');
     const passwordInput = document.getElementById('passwordInput');
@@ -838,22 +838,15 @@
       gateError.textContent = '';
     }
 
-    async function sha256(text) {
-      const data = new TextEncoder().encode(text);
-      const digest = await crypto.subtle.digest('SHA-256', data);
-      return Array.from(new Uint8Array(digest)).map(b => b.toString(16).padStart(2, '0')).join('');
-    }
-
     if (sessionStorage.getItem('neuroteacher_access') === 'granted') {
       document.body.classList.add('unlocked');
     }
 
-    form.addEventListener('submit', async (event) => {
+    form.addEventListener('submit', (event) => {
       event.preventDefault();
       gateError.textContent = '';
       const entered = passwordInput.value.trim();
-      const hash = await sha256(entered);
-      if (hash === PASSWORD_HASH) {
+      if (entered === ACCESS_PASSWORD) {
         unlock();
       } else {
         gateError.textContent = 'Пароль не подошёл. Проверьте раскладку и попробуйте ещё раз.';
@@ -873,7 +866,24 @@
       button.addEventListener('click', async () => {
         const id = button.getAttribute('data-copy');
         const text = document.getElementById(id).innerText;
-        await navigator.clipboard.writeText(text);
+        try {
+          if (navigator.clipboard && window.isSecureContext) {
+            await navigator.clipboard.writeText(text);
+          } else {
+            const area = document.createElement('textarea');
+            area.value = text;
+            area.style.position = 'fixed';
+            area.style.opacity = '0';
+            document.body.appendChild(area);
+            area.focus();
+            area.select();
+            document.execCommand('copy');
+            area.remove();
+          }
+        } catch (e) {
+          gateError.textContent = 'Не удалось скопировать автоматически. Выделите промпт и скопируйте вручную.';
+          return;
+        }
         const old = button.textContent;
         button.textContent = 'Скопировано ✓';
         button.classList.add('copied');
