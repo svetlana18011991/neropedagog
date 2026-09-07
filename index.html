@@ -502,6 +502,8 @@
       white-space: nowrap;
       max-width: none;
       margin-bottom: 12px;
+      font-size: clamp(40px, 4.15vw, 62px);
+      line-height: .98;
     }
     .section-title.stacked-heading > p {
       max-width: 760px;
@@ -522,51 +524,91 @@
     }
     #portfolio .work-card.prompt-collapsed .work-content {
       height: 100%;
+      min-height: 0;
       overflow: hidden;
-      position: relative;
-      padding-bottom: 104px;
+      display: flex;
+      flex-direction: column;
+      padding-bottom: 30px;
+    }
+    #portfolio .work-card.prompt-collapsed .prompt-box {
+      flex: 1 1 auto;
+      min-height: 180px;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      margin-top: 2px;
     }
     #portfolio .work-card.prompt-collapsed .prompt-box pre {
+      flex: 1 1 auto;
+      min-height: 0;
       overflow: hidden;
-      max-height: none;
+      position: relative;
+      padding-bottom: 8px;
     }
-    #portfolio .work-card.prompt-collapsed .work-content::after {
+    #portfolio .work-card.prompt-collapsed .prompt-box::after {
       content: "";
       position: absolute;
-      left: 0;
-      right: 0;
-      bottom: 78px;
-      height: 76px;
+      left: 18px;
+      right: 18px;
+      bottom: 67px;
+      height: 58px;
       pointer-events: none;
-      background: linear-gradient(180deg, rgba(255,253,250,0), rgba(255,253,250,.96) 72%);
-      z-index: 3;
+      background: linear-gradient(180deg, rgba(255,255,255,0), rgba(255,255,255,.98) 78%);
+      z-index: 2;
     }
     .prompt-toolbar {
       display: flex;
       flex-wrap: wrap;
-      gap: 10px;
+      gap: 9px;
       align-items: center;
-      margin-top: 14px;
-    }
-    #portfolio .work-card.prompt-collapsed .prompt-toolbar {
-      position: absolute;
-      left: 38px;
-      right: 38px;
-      bottom: 26px;
+      flex: 0 0 auto;
+      margin-top: 12px;
+      padding-top: 12px;
+      border-top: 1px solid rgba(111, 76, 62, .10);
+      position: relative;
       z-index: 5;
-      margin: 0;
+      background: #fff;
     }
     .expand-prompt-btn {
       border: 1px solid rgba(169,95,70,.22);
       background: #fffaf6;
       color: var(--terracotta);
-      border-radius: 999px;
-      padding: 10px 15px;
+      border-radius: 13px;
+      padding: 10px 14px;
+      font-size: 12px;
       font-weight: 700;
       cursor: pointer;
     }
     .expand-prompt-btn:hover { background: var(--peach-50); }
-    .prompt-toolbar .work-actions { margin: 0 !important; }
+    .prompt-toolbar .copy-btn { margin-top: 0; }
+    .prompt-toolbar .download-btn { box-shadow: none; }
+
+    /* Пояснение перед примерами */
+    .prompt-philosophy {
+      margin: -2px 0 26px;
+      padding: 24px 28px;
+      border-radius: 24px;
+      border: 1px solid rgba(169,95,70,.16);
+      background:
+        radial-gradient(circle at 95% 10%, rgba(243,207,189,.32), transparent 30%),
+        linear-gradient(145deg, rgba(255,250,246,.96), rgba(249,228,215,.52));
+      box-shadow: 0 14px 38px rgba(83,53,43,.07);
+    }
+    .prompt-philosophy h3 {
+      margin: 0 0 10px;
+      font-family: "Cormorant Garamond", Georgia, serif;
+      font-size: 30px;
+      line-height: 1;
+      font-weight: 600;
+    }
+    .prompt-philosophy p {
+      margin: 0;
+      max-width: 1040px;
+      color: var(--muted);
+      font-size: 14px;
+      line-height: 1.75;
+    }
+    .prompt-philosophy p + p { margin-top: 10px; }
 
 
     @media (max-width: 1020px) {
@@ -790,6 +832,12 @@
             <p>Здесь собраны готовые примеры материалов и промпты, которые можно скопировать и адаптировать под свой предмет, класс и тему.</p>
           </div>
 
+          <div class="prompt-philosophy">
+            <h3>Как я обычно работаю с ChatGPT</h3>
+            <p>Я сама обычно не пользуюсь заранее заготовленными длинными промптами. Чаще всего я просто наговариваю или пишу своими словами, что именно хочу получить, смотрю на результат и дальше веду диалог с чатом: прошу что-то изменить, убрать, добавить, перестроить или оформить по-другому.</p>
+            <p>Промпты ниже я предлагаю как удобную опору для тех, кому комфортнее работать с готовым запросом. Важно: эти результаты я получила не по готовым промптам — наоборот, многие промпты я составила уже по итоговому результату, чтобы коллегам было проще повторить похожий путь. Поэтому воспринимайте их не как строгую формулу, а как отправную точку, которую можно свободно менять под себя.</p>
+          </div>
+
           <div class="works">
             <article class="work-card">
               <div class="work-visual degree-preview">
@@ -990,6 +1038,10 @@
       document.body.classList.add('unlocked');
       sessionStorage.setItem('neuroteacher_access', 'granted');
       window.scrollTo(0, 0);
+      setTimeout(() => {
+        if (typeof setupCompactPromptCards === 'function') setupCompactPromptCards();
+        if (typeof refreshCompactPromptCards === 'function') refreshCompactPromptCards();
+      }, 80);
     }
 
     function lock() {
@@ -1001,6 +1053,10 @@
 
     if (sessionStorage.getItem('neuroteacher_access') === 'granted') {
       document.body.classList.add('unlocked');
+      setTimeout(() => {
+        if (typeof setupCompactPromptCards === 'function') setupCompactPromptCards();
+        if (typeof refreshCompactPromptCards === 'function') refreshCompactPromptCards();
+      }, 80);
     }
 
     form.addEventListener('submit', (event) => {
@@ -1056,81 +1112,85 @@
     });
 
 
-    // Компактный режим промптов: карточка по высоте равна визуалу слева.
-    function setupCompactPromptCards() {
-      document.querySelectorAll('#portfolio .work-card').forEach((card) => {
-        if (card.dataset.compactReady === '1') return;
-        const visual = card.querySelector('.work-visual');
-        const content = card.querySelector('.work-content');
-        const promptBox = card.querySelector('.prompt-box');
-        if (!visual || !content || !promptBox) return;
-
-        const toolbar = document.createElement('div');
-        toolbar.className = 'prompt-toolbar';
-
-        const copyBtn = promptBox.querySelector('.copy-btn');
-        if (copyBtn) toolbar.appendChild(copyBtn);
-
-        promptBox.querySelectorAll('.work-actions').forEach((actions) => {
-          actions.querySelectorAll('a, button').forEach((el) => toolbar.appendChild(el));
-          actions.remove();
-        });
-
-        const expandBtn = document.createElement('button');
-        expandBtn.type = 'button';
-        expandBtn.className = 'expand-prompt-btn';
-        expandBtn.textContent = 'Развернуть промпт';
-        toolbar.appendChild(expandBtn);
-        promptBox.appendChild(toolbar);
-
-        card.dataset.compactReady = '1';
-
-        const collapseToVisual = () => {
-          card.classList.remove('prompt-expanded');
-          card.classList.add('prompt-collapsed');
-          card.style.height = 'auto';
-          requestAnimationFrame(() => {
-            const visualHeight = Math.max(visual.scrollHeight, visual.getBoundingClientRect().height);
-            if (visualHeight > 0) card.style.height = Math.round(visualHeight) + 'px';
-          });
-          expandBtn.textContent = 'Развернуть промпт';
-        };
-
-        const expandCard = () => {
-          card.classList.remove('prompt-collapsed');
-          card.classList.add('prompt-expanded');
-          card.style.height = 'auto';
-          expandBtn.textContent = 'Свернуть промпт';
-        };
-
-        expandBtn.addEventListener('click', () => {
-          if (card.classList.contains('prompt-collapsed')) expandCard();
-          else collapseToVisual();
-        });
-
-        card.querySelectorAll('img').forEach((img) => {
-          if (!img.complete) img.addEventListener('load', collapseToVisual, { once: true });
-        });
-
-        collapseToVisual();
+    // Компактный режим промптов: карточка по высоте равна визуалу слева,
+    // а кнопки всегда остаются видимыми.
+    function setCollapsedCardHeight(card) {
+      const visual = card.querySelector('.work-visual');
+      if (!visual || !card.classList.contains('prompt-collapsed')) return;
+      card.style.height = 'auto';
+      requestAnimationFrame(() => {
+        const visualHeight = Math.max(visual.scrollHeight, visual.getBoundingClientRect().height);
+        if (visualHeight > 0) card.style.height = Math.round(visualHeight) + 'px';
       });
     }
 
-    window.addEventListener('load', setupCompactPromptCards);
+    function refreshCompactPromptCards() {
+      document.querySelectorAll('#portfolio .work-card.prompt-collapsed').forEach(setCollapsedCardHeight);
+    }
+
+    function setupCompactPromptCards() {
+      document.querySelectorAll('#portfolio .work-card').forEach((card) => {
+        const visual = card.querySelector('.work-visual');
+        const promptBox = card.querySelector('.prompt-box');
+        if (!visual || !promptBox) return;
+
+        if (card.dataset.compactReady !== '1') {
+          const toolbar = document.createElement('div');
+          toolbar.className = 'prompt-toolbar';
+
+          const copyBtn = promptBox.querySelector('.copy-btn');
+          if (copyBtn) toolbar.appendChild(copyBtn);
+
+          promptBox.querySelectorAll('.work-actions').forEach((actions) => {
+            actions.querySelectorAll('a, button').forEach((el) => toolbar.appendChild(el));
+            actions.remove();
+          });
+
+          const expandBtn = document.createElement('button');
+          expandBtn.type = 'button';
+          expandBtn.className = 'expand-prompt-btn';
+          expandBtn.textContent = 'Развернуть промпт';
+          toolbar.appendChild(expandBtn);
+          promptBox.appendChild(toolbar);
+
+          expandBtn.addEventListener('click', () => {
+            const collapsed = card.classList.contains('prompt-collapsed');
+            if (collapsed) {
+              card.classList.remove('prompt-collapsed');
+              card.classList.add('prompt-expanded');
+              card.style.height = 'auto';
+              expandBtn.textContent = 'Свернуть промпт';
+              card.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+            } else {
+              card.classList.remove('prompt-expanded');
+              card.classList.add('prompt-collapsed');
+              expandBtn.textContent = 'Развернуть промпт';
+              setCollapsedCardHeight(card);
+            }
+          });
+
+          card.querySelectorAll('img').forEach((img) => {
+            img.addEventListener('load', () => setCollapsedCardHeight(card));
+          });
+
+          card.dataset.compactReady = '1';
+          card.classList.add('prompt-collapsed');
+        }
+
+        setCollapsedCardHeight(card);
+      });
+    }
+
+    setupCompactPromptCards();
+    window.addEventListener('load', () => {
+      setupCompactPromptCards();
+      setTimeout(refreshCompactPromptCards, 80);
+    });
     window.addEventListener('resize', () => {
       clearTimeout(window.__promptResizeTimer);
-      window.__promptResizeTimer = setTimeout(() => {
-        document.querySelectorAll('#portfolio .work-card.prompt-collapsed').forEach((card) => {
-          const visual = card.querySelector('.work-visual');
-          if (!visual) return;
-          card.style.height = 'auto';
-          requestAnimationFrame(() => {
-            const visualHeight = Math.max(visual.scrollHeight, visual.getBoundingClientRect().height);
-            card.style.height = Math.round(visualHeight) + 'px';
-          });
-        });
-      }, 120);
+      window.__promptResizeTimer = setTimeout(refreshCompactPromptCards, 120);
     });
+
 
   </script>
 </body>
