@@ -296,6 +296,42 @@
     }
     .asset-btn:hover { transform: translateY(-1px); }
 
+    .subscription-note {
+      margin: 26px auto 0;
+      max-width: 860px;
+      padding: 18px 24px;
+      text-align: center;
+      border-top: 1px solid rgba(169,95,70,.13);
+      border-bottom: 1px solid rgba(169,95,70,.13);
+      color: var(--muted);
+      font-size: 14px;
+      line-height: 1.75;
+    }
+    .subscription-note p {
+      margin: 0;
+    }
+    .subscription-note p + p {
+      margin-top: 4px;
+    }
+    .subscription-note a {
+      color: var(--terracotta);
+      font-weight: 800;
+      text-decoration: none;
+      border-bottom: 1px solid rgba(169,95,70,.32);
+    }
+    .subscription-note a:hover {
+      border-bottom-color: var(--terracotta);
+    }
+    .subscription-code {
+      display: inline-block;
+      padding: 2px 8px;
+      border-radius: 999px;
+      background: rgba(249,228,215,.72);
+      color: var(--terracotta);
+      font-weight: 800;
+      letter-spacing: .04em;
+    }
+
     .editorial-card {
       display: grid; grid-template-columns: .8fr 1.2fr; overflow: hidden; border-radius: var(--radius-xl);
       border: 1px solid var(--line); background: var(--paper-solid); box-shadow: var(--shadow);
@@ -1106,6 +1142,11 @@
                 </div>
               </div>
             </article>
+          </div>
+
+          <div class="subscription-note">
+            <p>Платные подписки на сервисы я оформляю через <a href="https://vk.ru/subscriptionsconsulting" target="_blank" rel="noopener">«Помощь с подписками» ↗</a>.</p>
+            <p>Если вы пользуетесь сервисом впервые, действует скидка <strong>10%</strong> по промокоду <span class="subscription-code">МАТЕМАТИКА</span>.</p>
           </div>
         </div>
       </section>
