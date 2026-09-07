@@ -491,6 +491,84 @@
 
     footer { padding: 0 0 34px; text-align: center; color: #95877f; font-size: 12px; }
 
+
+    /* Заголовки секций: заголовок одной строкой, пояснение ниже */
+    .section-title.stacked-heading {
+      display: block;
+      margin-bottom: 30px;
+    }
+    .section-title.stacked-heading > div { width: 100%; }
+    .section-title.stacked-heading h2 {
+      white-space: nowrap;
+      max-width: none;
+      margin-bottom: 12px;
+    }
+    .section-title.stacked-heading > p {
+      max-width: 760px;
+      margin: 0;
+      line-height: 1.65;
+    }
+
+    /* Компактные карточки промптов: высота определяется визуалом слева */
+    #portfolio .work-card {
+      align-items: start;
+      position: relative;
+    }
+    #portfolio .work-visual {
+      align-self: start;
+    }
+    #portfolio .work-card.prompt-collapsed {
+      overflow: hidden;
+    }
+    #portfolio .work-card.prompt-collapsed .work-content {
+      height: 100%;
+      overflow: hidden;
+      position: relative;
+      padding-bottom: 104px;
+    }
+    #portfolio .work-card.prompt-collapsed .prompt-box pre {
+      overflow: hidden;
+      max-height: none;
+    }
+    #portfolio .work-card.prompt-collapsed .work-content::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: 78px;
+      height: 76px;
+      pointer-events: none;
+      background: linear-gradient(180deg, rgba(255,253,250,0), rgba(255,253,250,.96) 72%);
+      z-index: 3;
+    }
+    .prompt-toolbar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      align-items: center;
+      margin-top: 14px;
+    }
+    #portfolio .work-card.prompt-collapsed .prompt-toolbar {
+      position: absolute;
+      left: 38px;
+      right: 38px;
+      bottom: 26px;
+      z-index: 5;
+      margin: 0;
+    }
+    .expand-prompt-btn {
+      border: 1px solid rgba(169,95,70,.22);
+      background: #fffaf6;
+      color: var(--terracotta);
+      border-radius: 999px;
+      padding: 10px 15px;
+      font-weight: 700;
+      cursor: pointer;
+    }
+    .expand-prompt-btn:hover { background: var(--peach-50); }
+    .prompt-toolbar .work-actions { margin: 0 !important; }
+
+
     @media (max-width: 1020px) {
       .hero-grid, .video-grid, .editorial-card, .work-card, .closing, .quick-links { grid-template-columns: 1fr; }
       .hero-right { order: -1; }
@@ -501,6 +579,9 @@
       .section-title { grid-template-columns: 1fr; }
       .section-title p { max-width: 650px; }
       .editorial-intro { min-height: 280px; }
+    }
+    @media (max-width: 760px) {
+      .section-title.stacked-heading h2 { white-space: normal; }
     }
     @media (max-width: 560px) {
       .gate-card { padding: 42px 24px 32px; border-radius: 28px; }
@@ -676,7 +757,7 @@
 
       <section id="netlify">
         <div class="container">
-          <div class="section-title">
+          <div class="section-title stacked-heading">
             <div>
               <p class="eyebrow">Отдельный шаг</p>
               <h2>Как разместить на Netlify</h2>
@@ -691,8 +772,8 @@
             </div>
             <div class="editorial-content">
               <p><strong>Шаг 1.</strong> Сохраните код тренажёра как <code>index.html</code>.</p>
-              <p><strong>Шаг 2.</strong> Откройте сервис <a class="inline-link" href="https://app.netlify.com/drop" target="_blank" rel="noopener">Netlify Drop ↗</a>.</p>
-              <p><strong>Шаг 3.</strong> Перетащите файл <code>index.html</code> или папку проекта в окно загрузки.</p>
+              <p><strong>Шаг 2.</strong> Откройте Netlify. <span class="netlify-links"><a class="inline-link" href="https://app.netlify.com/" target="_blank" rel="noopener">Перейти в Netlify ↗</a> <a class="inline-link" href="https://app.netlify.com/auth-create" target="_blank" rel="noopener">Нет аккаунта? Зарегистрироваться ↗</a></span></p>
+              <p><strong>Шаг 3.</strong> В разделе <strong>Projects</strong> найдите область загрузки проекта и перетащите туда файл <code>index.html</code> или папку проекта.</p>
               <p><strong>Шаг 4.</strong> Дождитесь публикации, протестируйте сайт и скопируйте готовую ссылку.</p>
             </div>
           </div>
@@ -701,7 +782,7 @@
 
       <section id="portfolio">
         <div class="container">
-          <div class="section-title">
+          <div class="section-title stacked-heading">
             <div>
               <p class="eyebrow">Модуль 02</p>
               <h2>Промпты и примеры работ</h2>
@@ -973,6 +1054,84 @@
         }, 1600);
       });
     });
+
+
+    // Компактный режим промптов: карточка по высоте равна визуалу слева.
+    function setupCompactPromptCards() {
+      document.querySelectorAll('#portfolio .work-card').forEach((card) => {
+        if (card.dataset.compactReady === '1') return;
+        const visual = card.querySelector('.work-visual');
+        const content = card.querySelector('.work-content');
+        const promptBox = card.querySelector('.prompt-box');
+        if (!visual || !content || !promptBox) return;
+
+        const toolbar = document.createElement('div');
+        toolbar.className = 'prompt-toolbar';
+
+        const copyBtn = promptBox.querySelector('.copy-btn');
+        if (copyBtn) toolbar.appendChild(copyBtn);
+
+        promptBox.querySelectorAll('.work-actions').forEach((actions) => {
+          actions.querySelectorAll('a, button').forEach((el) => toolbar.appendChild(el));
+          actions.remove();
+        });
+
+        const expandBtn = document.createElement('button');
+        expandBtn.type = 'button';
+        expandBtn.className = 'expand-prompt-btn';
+        expandBtn.textContent = 'Развернуть промпт';
+        toolbar.appendChild(expandBtn);
+        promptBox.appendChild(toolbar);
+
+        card.dataset.compactReady = '1';
+
+        const collapseToVisual = () => {
+          card.classList.remove('prompt-expanded');
+          card.classList.add('prompt-collapsed');
+          card.style.height = 'auto';
+          requestAnimationFrame(() => {
+            const visualHeight = Math.max(visual.scrollHeight, visual.getBoundingClientRect().height);
+            if (visualHeight > 0) card.style.height = Math.round(visualHeight) + 'px';
+          });
+          expandBtn.textContent = 'Развернуть промпт';
+        };
+
+        const expandCard = () => {
+          card.classList.remove('prompt-collapsed');
+          card.classList.add('prompt-expanded');
+          card.style.height = 'auto';
+          expandBtn.textContent = 'Свернуть промпт';
+        };
+
+        expandBtn.addEventListener('click', () => {
+          if (card.classList.contains('prompt-collapsed')) expandCard();
+          else collapseToVisual();
+        });
+
+        card.querySelectorAll('img').forEach((img) => {
+          if (!img.complete) img.addEventListener('load', collapseToVisual, { once: true });
+        });
+
+        collapseToVisual();
+      });
+    }
+
+    window.addEventListener('load', setupCompactPromptCards);
+    window.addEventListener('resize', () => {
+      clearTimeout(window.__promptResizeTimer);
+      window.__promptResizeTimer = setTimeout(() => {
+        document.querySelectorAll('#portfolio .work-card.prompt-collapsed').forEach((card) => {
+          const visual = card.querySelector('.work-visual');
+          if (!visual) return;
+          card.style.height = 'auto';
+          requestAnimationFrame(() => {
+            const visualHeight = Math.max(visual.scrollHeight, visual.getBoundingClientRect().height);
+            card.style.height = Math.round(visualHeight) + 'px';
+          });
+        });
+      }, 120);
+    });
+
   </script>
 </body>
 </html>
