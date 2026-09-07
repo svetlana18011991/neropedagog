@@ -540,6 +540,116 @@
       font-weight: 600;
     }
 
+
+    /* Архив с референсами */
+    .references-library {
+      margin: 54px 0 34px;
+      padding: 38px 42px;
+      border-radius: 32px;
+      border: 1px solid rgba(169,95,70,.14);
+      background:
+        radial-gradient(circle at 9% 12%, rgba(255,255,255,.86), transparent 24%),
+        radial-gradient(circle at 92% 82%, rgba(232,174,145,.22), transparent 27%),
+        linear-gradient(135deg, rgba(250,231,220,.92), rgba(255,252,248,.96));
+      box-shadow: 0 20px 55px rgba(83,53,43,.09);
+      display: grid;
+      grid-template-columns: 1.25fr .75fr;
+      gap: 36px;
+      align-items: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .references-library::after {
+      content: "";
+      position: absolute;
+      width: 230px;
+      height: 230px;
+      border-radius: 50%;
+      right: -95px;
+      top: -115px;
+      border: 1px solid rgba(169,95,70,.10);
+      box-shadow: 0 0 0 34px rgba(255,255,255,.14);
+      pointer-events: none;
+    }
+    .references-library-copy {
+      position: relative;
+      z-index: 1;
+    }
+    .references-library h3 {
+      margin: 7px 0 12px;
+      font-family: "Cormorant Garamond", Georgia, serif;
+      font-size: clamp(38px, 4vw, 54px);
+      line-height: .96;
+      font-weight: 600;
+      letter-spacing: -.035em;
+    }
+    .references-library p {
+      margin: 0;
+      max-width: 760px;
+      color: var(--muted);
+      font-size: 15px;
+      line-height: 1.75;
+    }
+    .references-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 18px;
+    }
+    .references-tag {
+      padding: 8px 11px;
+      border-radius: 999px;
+      border: 1px solid rgba(169,95,70,.13);
+      background: rgba(255,255,255,.68);
+      color: #745e54;
+      font-size: 11px;
+      font-weight: 600;
+    }
+    .references-download {
+      position: relative;
+      z-index: 1;
+      min-height: 190px;
+      padding: 26px;
+      border-radius: 25px;
+      border: 1px solid rgba(169,95,70,.13);
+      background: rgba(255,253,250,.80);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: flex-start;
+      box-shadow: 0 14px 36px rgba(83,53,43,.07);
+    }
+    .references-download-icon {
+      width: 52px;
+      height: 52px;
+      border-radius: 17px;
+      display: grid;
+      place-items: center;
+      margin-bottom: 17px;
+      background: #f4ddd1;
+      color: var(--terracotta);
+      font-size: 25px;
+      font-weight: 700;
+    }
+    .references-download strong {
+      display: block;
+      margin-bottom: 7px;
+      font-family: "Cormorant Garamond", Georgia, serif;
+      font-size: 25px;
+      line-height: 1;
+    }
+    .references-download small {
+      color: var(--muted);
+      line-height: 1.5;
+      margin-bottom: 16px;
+    }
+    .references-download .download-btn {
+      margin: 0;
+      width: 100%;
+      justify-content: center;
+      text-align: center;
+    }
+
     .farewell {
       margin: 54px auto 62px;
       padding: 22px 28px 8px;
@@ -820,6 +930,8 @@
       .lesson-guide-top { grid-template-columns: 1fr; gap: 12px; }
       .lesson-guide-number { width: 46px; height: 46px; font-size: 24px; }
       .lesson-guide-steps { padding-left: 0; }
+      .references-library { padding: 28px 24px; gap: 22px; }
+      .references-download { min-height: 0; }
       .farewell { margin-top: 38px; padding-left: 12px; padding-right: 12px; }
     }
   </style>
@@ -1445,6 +1557,28 @@
               </div>
             </article>
 
+          </div>
+
+          <div class="references-library">
+            <div class="references-library-copy">
+              <p class="eyebrow">Бонусные материалы</p>
+              <h3>Референсы для ваших разработок</h3>
+              <p>Я собрала отдельный архив с визуальными референсами, которые можно использовать как отправную точку при создании собственных материалов. Выбирайте понравившийся фон, прикрепляйте его к сообщению в ChatGPT и описывайте, что хотите получить. Не обязательно копировать картинку буквально — берите из неё настроение, палитру и общую стилистику.</p>
+              <div class="references-tags">
+                <span class="references-tag">рабочие листы</span>
+                <span class="references-tag">памятки</span>
+                <span class="references-tag">учебные карточки</span>
+                <span class="references-tag">рабочие тетради</span>
+                <span class="references-tag">интерактивные материалы</span>
+              </div>
+            </div>
+
+            <div class="references-download">
+              <div class="references-download-icon">↓</div>
+              <strong>Архив референсов</strong>
+              <small>Готовая подборка фонов и визуальных идей для оформления учебных материалов.</small>
+              <a class="download-btn" href="References.zip" download>↓ Скачать References.zip</a>
+            </div>
           </div>
 
           <div class="farewell">
