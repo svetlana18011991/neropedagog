@@ -9,7 +9,7 @@
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Great+Vibes&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Great+Vibes&family=Manrope:wght@400;500;600;700&family=Marck+Script&display=swap" rel="stylesheet">
 
   <style>
     :root {
@@ -481,13 +481,102 @@
     .work-content h3 { margin: 8px 0 10px; font-size: 39px; line-height: 1; }
     .work-content > p { color: var(--muted); line-height: 1.65; }
 
-    .closing {
-      margin: 46px 0 72px; padding: 48px; border-radius: var(--radius-xl); background: #2d2521;
-      color: #fff8f2; display: grid; grid-template-columns: 1fr auto; gap: 24px; align-items: center;
+    .lesson-guide {
+      margin: 4px 0 34px;
+      padding: 28px 32px;
+      border-radius: 26px;
+      border: 1px solid rgba(169,95,70,.14);
+      background:
+        radial-gradient(circle at 95% 10%, rgba(243,207,189,.36), transparent 28%),
+        linear-gradient(145deg, rgba(255,253,250,.96), rgba(255,244,236,.82));
+      box-shadow: 0 16px 44px rgba(83,53,43,.08);
     }
-    .closing h3 { margin: 0; font-size: 42px; line-height: 1; }
-    .closing p { margin: 10px 0 0; color: rgba(255,255,255,.66); }
-    .closing-tag { border: 1px solid rgba(255,255,255,.22); border-radius: 999px; padding: 10px 14px; font-size: 12px; }
+    .lesson-guide-top {
+      display: grid;
+      grid-template-columns: auto 1fr;
+      gap: 20px;
+      align-items: start;
+    }
+    .lesson-guide-number {
+      width: 54px;
+      height: 54px;
+      border-radius: 50%;
+      display: grid;
+      place-items: center;
+      background: linear-gradient(145deg, #fff8f2, #f3d8ca);
+      border: 1px solid rgba(169,95,70,.16);
+      color: var(--terracotta);
+      font-family: "Cormorant Garamond", Georgia, serif;
+      font-size: 28px;
+      font-weight: 600;
+    }
+    .lesson-guide h3 {
+      margin: 0 0 8px;
+      font-family: "Cormorant Garamond", Georgia, serif;
+      font-size: 34px;
+      line-height: 1;
+      font-weight: 600;
+    }
+    .lesson-guide p {
+      margin: 0;
+      color: var(--muted);
+      line-height: 1.7;
+      max-width: 970px;
+    }
+    .lesson-guide-steps {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 18px;
+      padding-left: 74px;
+    }
+    .lesson-guide-step {
+      padding: 8px 12px;
+      border-radius: 999px;
+      border: 1px solid rgba(169,95,70,.13);
+      background: rgba(255,255,255,.72);
+      color: #6e5b52;
+      font-size: 12px;
+      font-weight: 600;
+    }
+
+    .farewell {
+      margin: 54px auto 62px;
+      padding: 22px 28px 8px;
+      text-align: center;
+      max-width: 1040px;
+      position: relative;
+    }
+    .farewell::before {
+      content: "";
+      display: block;
+      width: 74px;
+      height: 1px;
+      margin: 0 auto 24px;
+      background: rgba(169,95,70,.34);
+    }
+    .farewell-script {
+      margin: 0 auto 12px;
+      max-width: 940px;
+      font-family: "Marck Script", "Cormorant Garamond", Georgia, serif;
+      color: var(--terracotta);
+      font-size: clamp(34px, 4.2vw, 58px);
+      line-height: 1.12;
+      font-weight: 400;
+    }
+    .farewell-text {
+      margin: 0 auto;
+      max-width: 760px;
+      color: var(--muted);
+      font-size: 16px;
+      line-height: 1.7;
+    }
+    .farewell-signature {
+      margin-top: 18px;
+      color: #9a7869;
+      font-size: 13px;
+      letter-spacing: .05em;
+    }
 
     footer { padding: 0 0 34px; text-align: center; color: #95877f; font-size: 12px; }
 
@@ -704,7 +793,7 @@
 
 
     @media (max-width: 1020px) {
-      .hero-grid, .video-grid, .editorial-card, .work-card, .closing, .quick-links { grid-template-columns: 1fr; }
+      .hero-grid, .video-grid, .editorial-card, .work-card, .quick-links { grid-template-columns: 1fr; }
       .hero-right { order: -1; }
       .hero-visual { max-width: 520px; margin: 0 auto; }
     }
@@ -722,11 +811,16 @@
       .password-row { flex-direction: column; }
       .gate-submit { height: 50px; }
       .hero { padding-top: 54px; }
-      .video-body, .editorial-content, .work-content, .closing { padding: 26px; }
+      .video-body, .editorial-content, .work-content { padding: 26px; }
       .editorial-intro { padding: 30px; }
       .hero-copy { font-size: 16px; }
       .brand-copy strong { font-size: 13px; }
       .brand-copy a { font-size: 11px; }
+      .lesson-guide { padding: 24px 20px; }
+      .lesson-guide-top { grid-template-columns: 1fr; gap: 12px; }
+      .lesson-guide-number { width: 46px; height: 46px; font-size: 24px; }
+      .lesson-guide-steps { padding-left: 0; }
+      .farewell { margin-top: 38px; padding-left: 12px; padding-right: 12px; }
     }
   </style>
 </head>
@@ -843,6 +937,21 @@
 
       <section id="lessons">
         <div class="container">
+          <div class="lesson-guide">
+            <div class="lesson-guide-top">
+              <div class="lesson-guide-number">01</div>
+              <div>
+                <h3>С чего начать</h3>
+                <p>Сначала посмотрите два видеоурока — лучше по порядку и сразу пробовать повторять шаги у себя. Под видео можно скачать готовые файлы. А ниже на странице вас ждут короткая памятка по Netlify, мои примеры разработок, промпты и материалы для скачивания. В самом низу я также оставлю отдельный архив с референсами фонов для учебных разработок — его можно будет скачать и использовать как отправную точку для собственного оформления.</p>
+              </div>
+            </div>
+            <div class="lesson-guide-steps">
+              <span class="lesson-guide-step">1. Посмотреть видео</span>
+              <span class="lesson-guide-step">2. Попробовать повторить</span>
+              <span class="lesson-guide-step">3. Забрать примеры, промпты и референсы ниже</span>
+            </div>
+          </div>
+
           <div class="section-title lessons-heading">
             <div>
               <p class="eyebrow">Модуль 01</p>
@@ -1338,12 +1447,10 @@
 
           </div>
 
-          <div class="closing">
-            <div>
-              <h3>Сохраняйте не только результат, но и способ его создания.</h3>
-              <p>Так постепенно собирается собственная библиотека промптов и шаблонов.</p>
-            </div>
-            <div class="closing-tag">Светлана Быкова</div>
+          <div class="farewell">
+            <p class="farewell-script">Пробуйте, экспериментируйте и обязательно делайте по-своему.</p>
+            <p class="farewell-text">Пусть нейросети не заменяют ваши идеи, а помогают быстрее воплощать их в жизнь — чтобы больше времени оставалось на учеников, творчество и то, ради чего мы любим свою работу.</p>
+            <div class="farewell-signature">С теплом, Светлана Быкова</div>
           </div>
         </div>
       </section>
